@@ -1,0 +1,80 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Personality {
+  id: Int!
+  name: String!
+  upvotes: Int!
+  downvotes: Int!
+}
+
+type Query {
+  personalities(where: PersonalityWhereInput, orderBy: [PersonalityOrderByWithRelationInput!], cursor: PersonalityWhereUniqueInput, take: Int, skip: Int, distinct: [PersonalityScalarFieldEnum!]): [Personality!]!
+  personality(where: PersonalityWhereUniqueInput): Personality!
+}
+
+input PersonalityWhereInput {
+  id: IntFilter
+  name: StringFilter
+  upvotes: IntFilter
+  downvotes: IntFilter
+  AND: [PersonalityWhereInput!]
+  OR: [PersonalityWhereInput!]
+  NOT: [PersonalityWhereInput!]
+}
+
+input IntFilter {
+  equals: Int
+  in: Int
+  notIn: Int
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: Int
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: String
+  mode: QueryMode
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input PersonalityOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  upvotes: SortOrder
+  downvotes: SortOrder
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input PersonalityWhereUniqueInput {
+  id: Int
+  name: String
+}
+
+enum PersonalityScalarFieldEnum {
+  id
+  name
+  upvotes
+  downvotes
+}

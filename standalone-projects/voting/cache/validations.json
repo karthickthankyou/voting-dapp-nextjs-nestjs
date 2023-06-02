@@ -5,6 +5,106 @@
       "contracts/Voting.sol:Voting": {
         "src": "contracts/Voting.sol:4",
         "version": {
+          "withMetadata": "75ee0ff3cc7abf8f2915e6396c56e27cd1d5c72dcb9f51085a689d41d3d5e1ad",
+          "withoutMetadata": "c10b41c67346e5158051f8c57caa190c127c0bcf847ab2078d287530db55617a",
+          "linkedWithoutMetadata": "c10b41c67346e5158051f8c57caa190c127c0bcf847ab2078d287530db55617a"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:14"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:15"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))": {
+              "label": "mapping(address => mapping(string => bool))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_bool)": {
+              "label": "mapping(string => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)8_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:4",
+        "version": {
           "withMetadata": "6bcfd532ce2946b4a92604441f002086df790fcfda4fe0eefe0fa83b1a13dd11",
           "withoutMetadata": "130a76b9197108e735a246ac467a7214c84e9c0b6d47d2cdfe2d2faf304b21b7",
           "linkedWithoutMetadata": "130a76b9197108e735a246ac467a7214c84e9c0b6d47d2cdfe2d2faf304b21b7"

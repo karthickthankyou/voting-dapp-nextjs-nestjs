@@ -6,7 +6,6 @@ contract Voting {
         string name;
         uint256 upvotes;
         uint256 downvotes;
-        string about;
     }
 
     event PersonalityCreated(string name);
@@ -15,12 +14,12 @@ contract Voting {
     mapping(string => Personality) public personalities;
     mapping(address => mapping(string => bool)) public votes;
 
-    function createPersonality(string memory name, string memory about) public {
+    function createPersonality(string memory name) public {
         require(
             bytes(personalities[name].name).length == 0,
             "Personality already exists"
         );
-        personalities[name] = Personality(name, 0, 0, about);
+        personalities[name] = Personality(name, 0, 0);
 
         emit PersonalityCreated(name); // Emit event
     }
