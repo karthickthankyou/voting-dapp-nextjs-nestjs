@@ -12,5 +12,9 @@
       "**/@openzeppelin",
       "**/@openzeppelin/**"
     ]
+  },
+  "devDependencies": {
+    "nx": "16.3.1",
+    "nx-cloud": "latest"
   }
 }
