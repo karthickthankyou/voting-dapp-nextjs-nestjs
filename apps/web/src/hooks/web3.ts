@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
-import { abi } from '../../../../standalone-projects/voting/artifacts/contracts/Voting.sol/Voting.json'
-import { contractAddress } from '../../../../standalone-projects/voting/contractAddress.json'
+import abiJson from '../../../../standalone-projects/voting/artifacts/contracts/Voting.sol/Voting.json'
+import contractAddressJson from '../../../../standalone-projects/voting/contractAddress.json'
 
 declare global {
   interface Window {
@@ -46,7 +46,10 @@ export const useAccount = () => {
     setAccount(accounts[0])
 
     // Create a new instance of the contract
-    const contract = new web3.eth.Contract(abi, contractAddress)
+    const contract = new web3.eth.Contract(
+      abiJson.abi,
+      contractAddressJson.contractAddress,
+    )
     setContract(contract)
   }
 

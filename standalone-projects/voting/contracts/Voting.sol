@@ -1,8 +1,19 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract Voting {
+contract Voting is Initializable {
+    address public owner;
+    uint public maxPersonalityCreation;
+
+    function initialize() public initializer {
+        owner = msg.sender;
+        maxPersonalityCreation = 5;
+    }
+
+    mapping(address => string[]) public createdPersonalities;
+
     struct Personality {
         string name;
         uint256 upvotes;
@@ -10,6 +21,7 @@ contract Voting {
     }
 
     event PersonalityCreated(string name, address creator);
+    event PersonalityRemoved(string name);
     event VotingUpdated(
         string name,
         uint256 upvotes,
@@ -23,10 +35,16 @@ contract Voting {
 
     function createPersonality(string memory name) public {
         require(
+            createdPersonalities[msg.sender].length < maxPersonalityCreation,
+            "Maximum personality creation limit reached."
+        );
+        require(
             bytes(personalities[name].name).length == 0,
             "Personality already exists"
         );
         personalities[name] = Personality(name, 0, 0);
+        createdPersonalities[msg.sender].push(name);
+
         emit PersonalityCreated(name, msg.sender);
     }
 
@@ -78,5 +96,19 @@ contract Voting {
             msg.sender,
             -1
         );
+    }
+
+    function removePersonality(string memory name) public {
+        require(
+            msg.sender == owner,
+            "Only the owner can remove a personality."
+        );
+        require(
+            bytes(personalities[name].name).length != 0,
+            "Personality does not exist"
+        );
+
+        delete personalities[name];
+        emit PersonalityRemoved(name);
     }
 }

@@ -37,7 +37,7 @@ export class MeilisearchService {
   }
 
   async deleteAllDocuments(indexName = INDEX_NAME): Promise<void> {
-    const searchIndex = await this.client.getIndex(INDEX_NAME)
+    const searchIndex = await this.client.getIndex(indexName)
 
     await searchIndex.deleteAllDocuments()
   }
@@ -78,6 +78,26 @@ export class MeilisearchService {
       await index.waitForTask(taskUid)
     } catch (e: any) {
       console.error('Error adding documents to index', e)
+    }
+  }
+
+  async deleteFromIndex(name: string, indexName = INDEX_NAME): Promise<void> {
+    try {
+      const index = await this.client.getIndex(indexName)
+
+      // Search for the document by name
+      const searchResults = await index.search(name, { limit: 1 })
+
+      // If a document with the provided name is found, delete it
+      if (
+        searchResults.hits.length > 0 &&
+        searchResults.hits[0].name === name
+      ) {
+        const { taskUid } = await index.deleteDocument(searchResults.hits[0].id)
+        await index.waitForTask(taskUid)
+      }
+    } catch (e: any) {
+      console.error('Error deleting document from index', e)
     }
   }
 }

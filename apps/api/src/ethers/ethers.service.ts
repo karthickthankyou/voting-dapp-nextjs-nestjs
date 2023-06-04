@@ -6,7 +6,7 @@ import { AbiItem } from 'web3-utils'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { MeilisearchService } from 'src/meilisearch/meilisearch.service'
 
-export const contractAddress = '0x3346580CdBD7dB5408238362ec6E0302EE537DB5'
+export const contractAddress = '0x2Dc2a36FaC2e19390415db5d39e4344beD89eba7'
 dotenv.config()
 
 @Injectable()
@@ -93,5 +93,31 @@ export class EthersService {
         },
       )
       .on('connected', (str) => console.log('VotingUpdated listening...', str))
+
+    this.contract.events
+      .PersonalityRemoved(
+        {
+          fromBlock: 'latest',
+        },
+        async (error, event) => {
+          if (error) {
+            console.error('Error on PersonalityRemoved event', error)
+            return
+          }
+          console.log(event)
+          const { name } = event.returnValues
+
+          // Remove from Prisma
+          await this.prisma.personality.delete({
+            where: { name },
+          })
+
+          // Remove from Meili
+          await this.meili.deleteFromIndex(name)
+
+          console.log('Personality removed: ', name)
+        },
+      )
+      .on('connected', () => console.log('PersonalityRemoved listening...'))
   }
 }

@@ -2,6 +2,553 @@
   "version": "3.4",
   "log": [
     {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:58",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "d99e4459ebe727195ec84ac37fff8e0dbe75109cfa6d6e5df2ca25308016ec90",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:6",
+        "version": {
+          "withMetadata": "d0b554b1b1d8af221d54167c68747d4e3db78d400f7adfd1e94816474ef2f0c3",
+          "withoutMetadata": "e8f20136b416134bf0d80d4af09249ce7d33efc061009bd61a4f648b400a6798",
+          "linkedWithoutMetadata": "e8f20136b416134bf0d80d4af09249ce7d33efc061009bd61a4f648b400a6798"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "initialize()",
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)",
+          "removePersonality(string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "owner",
+              "offset": 2,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:7"
+            },
+            {
+              "label": "maxPersonalityCreation",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:8"
+            },
+            {
+              "label": "createdPersonalities",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_mapping(t_address,t_array(t_string_storage)dyn_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:15"
+            },
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)534_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:33"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:34"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_string_storage)dyn_storage": {
+              "label": "string[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_array(t_string_storage)dyn_storage)": {
+              "label": "mapping(address => string[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))": {
+              "label": "mapping(address => mapping(string => int256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_int256)": {
+              "label": "mapping(string => int256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)534_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)534_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:5",
+        "version": {
+          "withMetadata": "93aeee5bc745703d38c0f10c7ca9a80f530c74498c396240c32b4f11b1d762c3",
+          "withoutMetadata": "bb5ae0db9571d9f949fc06055f9a93053eda275a9f81f0a44392c520d4d4258c",
+          "linkedWithoutMetadata": "bb5ae0db9571d9f949fc06055f9a93053eda275a9f81f0a44392c520d4d4258c"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)",
+          "removePersonality(string)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Voting",
+            "src": "contracts/Voting.sol:8"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "maxPersonalityCreation",
+            "src": "contracts/Voting.sol:13"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:6"
+            },
+            {
+              "label": "createdPersonalities",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_array(t_string_storage)dyn_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:12"
+            },
+            {
+              "label": "maxPersonalityCreation",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:13"
+            },
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)27_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:31"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:32"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_string_storage)dyn_storage": {
+              "label": "string[]",
+              "numberOfBytes": "32"
+            },
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_array(t_string_storage)dyn_storage)": {
+              "label": "mapping(address => string[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))": {
+              "label": "mapping(address => mapping(string => int256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_int256)": {
+              "label": "mapping(string => int256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)27_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)27_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "@openzeppelin/contracts/access/Ownable.sol:Ownable": {
+        "src": "@openzeppelin/contracts/access/Ownable.sol:20",
+        "inherit": [
+          "@openzeppelin/contracts/utils/Context.sol:Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Ownable",
+            "src": "@openzeppelin/contracts/access/Ownable.sol:28"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "@openzeppelin/contracts/access/Ownable.sol:21"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@openzeppelin/contracts/utils/Context.sol:Context": {
+        "src": "@openzeppelin/contracts/utils/Context.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:6",
+        "version": {
+          "withMetadata": "eccf387a5f3c06558f22ff4c03fcf975b63680d1bb9c294fdf56c3c4d99b58a8",
+          "withoutMetadata": "dd7d3bd68370b19284bfaea1e311539e64af107ddc05863f3bf853d0b6acc6f7",
+          "linkedWithoutMetadata": "dd7d3bd68370b19284bfaea1e311539e64af107ddc05863f3bf853d0b6acc6f7"
+        },
+        "inherit": [
+          "@openzeppelin/contracts/access/Ownable.sol:Ownable",
+          "@openzeppelin/contracts/utils/Context.sol:Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)",
+          "removePersonality(string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "@openzeppelin/contracts/access/Ownable.sol:21"
+            },
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)146_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:22"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:23"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))": {
+              "label": "mapping(address => mapping(string => int256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_int256)": {
+              "label": "mapping(string => int256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)146_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)146_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
       "contracts/Voting.sol:Voting": {
         "src": "contracts/Voting.sol:5",
         "version": {
