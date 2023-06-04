@@ -16,7 +16,7 @@ declare global {
 export const useAccount = () => {
   const [account, setAccount] = useState('')
   const [contract, setContract] = useState<Contract | null>()
-
+  console.log(account, contract)
   useEffect(() => {
     loadWeb3()
     loadBlockchainData()

@@ -10,6 +10,10 @@ type Personality {
   creator: String!
 }
 
+type AggregateCountOutput {
+  count: Int!
+}
+
 type Vote {
   id: Int!
   name: String!
@@ -21,6 +25,7 @@ type Vote {
 type Query {
   personalities(where: PersonalityWhereInput, orderBy: [PersonalityOrderByWithRelationInput!], cursor: PersonalityWhereUniqueInput, take: Int, skip: Int, distinct: [PersonalityScalarFieldEnum!]): [Personality!]!
   personality(where: PersonalityWhereUniqueInput): Personality!
+  personalitiesCount(where: PersonalityWhereInput): AggregateCountOutput!
   votes(where: VoteWhereInput, orderBy: [VoteOrderByWithRelationInput!], cursor: VoteWhereUniqueInput, take: Int, skip: Int, distinct: [VoteScalarFieldEnum!]): [Vote!]!
   vote(where: VoteWhereUniqueInput): Vote!
 }
@@ -147,4 +152,8 @@ enum VoteScalarFieldEnum {
   vote
   voter
   personalityId
+}
+
+type Subscription {
+  personalityCreated: Personality
 }

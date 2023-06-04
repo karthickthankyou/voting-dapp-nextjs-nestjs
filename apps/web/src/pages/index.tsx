@@ -1,10 +1,14 @@
 import { useAccount } from '@/hooks/web3'
-import {} from 'web3-utils'
+import { CreatePersonality } from '@personality-voting/ui/src/components/templates/CreatePersonality'
+import { ListPersonalities } from '@personality-voting/ui/src/components/templates/ListPersonalities'
 
 export default function Home() {
   const { account, contract } = useAccount()
+
   return (
     <main className="flex flex-col items-start gap-6 ">
+      <CreatePersonality />
+      <ListPersonalities />
       <button
         onClick={async () => {
           try {
@@ -12,8 +16,6 @@ export default function Home() {
             const personality = await contract?.methods
               .personalities('DONALD TRUMP 2')
               .call()
-
-            console.log('personality ', personality)
 
             // Check the length of the personality name to verify its existence
             if (personality.name) {

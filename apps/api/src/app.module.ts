@@ -12,6 +12,7 @@ import { join } from 'path'
 import { EthersModule } from './ethers/ethers.module'
 import { PersonalitiesModule } from './models/personalities/personalities.module'
 import { VotesModule } from './models/votes/votes.module'
+import { PubSubModule } from './common/pub-sub/pub-sub.module'
 
 @Module({
   imports: [
@@ -23,10 +24,16 @@ import { VotesModule } from './models/votes/votes.module'
       buildSchemaOptions: {
         numberScalarMode: 'integer',
       },
+      installSubscriptionHandlers: true,
+      subscriptions: {
+        'graphql-ws': true,
+        'subscriptions-transport-ws': true,
+      },
     }),
     PrismaModule,
     MeilisearchModule,
     EthersModule,
+    PubSubModule,
 
     PersonalitiesModule,
     VotesModule,

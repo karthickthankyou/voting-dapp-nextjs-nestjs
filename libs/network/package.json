@@ -1,0 +1,21 @@
+{
+  "name": "@personality-voting/network",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/client": "3.7.10",
+    "firebase": "9.19.0",
+    "graphql": "16.6.0",
+    "graphql-request": "5.2.0"
+  },
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.ts",
+    "tsc": "tsc"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "3.2.2",
+    "@graphql-codegen/client-preset": "2.1.1",
+    "@graphql-codegen/named-operations-object": "^2.3.1",
+    "@graphql-codegen/typescript-react-apollo": "3.3.7"
+  }
+}

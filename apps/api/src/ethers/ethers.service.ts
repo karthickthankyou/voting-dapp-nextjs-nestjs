@@ -5,8 +5,9 @@ import { abi } from 'src/util'
 import { AbiItem } from 'web3-utils'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { MeilisearchService } from 'src/meilisearch/meilisearch.service'
+import { PubSubService } from 'src/common/pub-sub/pub-sub.service'
 
-export const contractAddress = '0x2Dc2a36FaC2e19390415db5d39e4344beD89eba7'
+export const contractAddress = '0x29a645fAD55F5374530c9E535b8f6B3e8A43b1e3'
 dotenv.config()
 
 @Injectable()
@@ -17,6 +18,7 @@ export class EthersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly meili: MeilisearchService,
+    private readonly pubSub: PubSubService,
   ) {
     console.log('WSS_URL ', process.env.WSS_URL)
     this.web3 = new Web3(process.env.WSS_URL)
@@ -58,6 +60,11 @@ export class EthersService {
           await this.meili.addToIndex([{ name, id: personality.id }])
           // Add your logic here
           console.log('Event ', event)
+
+          console.log('Publishing...', personality)
+          this.pubSub.publish('personalityCreated', {
+            personalityCreated: personality,
+          })
         },
       )
       .on('connected', (str) =>

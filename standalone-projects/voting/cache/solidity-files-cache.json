@@ -38,8 +38,8 @@
       ]
     },
     "/Users/karthickragavendran/Desktop/personality-voting/standalone-projects/voting/contracts/Voting.sol": {
-      "lastModificationDate": 1685866100509,
-      "contentHash": "af66e22c18bd96b18b79df23ab7717a5",
+      "lastModificationDate": 1685906350146,
+      "contentHash": "ebaf3f49be9736bcd90acac0d6ef69b8",
       "sourceName": "contracts/Voting.sol",
       "solcConfig": {
         "version": "0.8.18",

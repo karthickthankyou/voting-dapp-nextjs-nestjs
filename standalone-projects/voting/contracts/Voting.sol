@@ -9,7 +9,7 @@ contract Voting is Initializable {
 
     function initialize() public initializer {
         owner = msg.sender;
-        maxPersonalityCreation = 5;
+        maxPersonalityCreation = 100;
     }
 
     mapping(address => string[]) public createdPersonalities;

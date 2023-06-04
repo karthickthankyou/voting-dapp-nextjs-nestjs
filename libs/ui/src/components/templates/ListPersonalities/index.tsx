@@ -1,0 +1,1 @@
+export { ListPersonalities } from './ListPersonalities'

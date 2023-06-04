@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@personality-voting/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@personality-voting/forms": "*",
+    "@personality-voting/network": "*",
+    "@personality-voting/ui": "*",
     "@types/node": "20.2.5",
     "@types/react": "18.2.8",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "graphql-ws": "^5.13.1",
     "next": "13.4.4",
     "postcss": "8.4.24",
     "react": "18.2.0",
