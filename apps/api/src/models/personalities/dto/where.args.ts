@@ -5,6 +5,7 @@ import {
   RestrictProperties,
   StringFilter,
 } from 'src/common/dtos/common.input'
+import { VoteListRelationFilter } from 'src/models/votes/dto/where.args'
 
 @InputType()
 export class PersonalityWhereUniqueInput
@@ -25,6 +26,10 @@ export class PersonalityWhereInput
   implements
     RestrictProperties<PersonalityWhereInput, Prisma.PersonalityWhereInput>
 {
+  @Field(() => StringFilter, { nullable: true })
+  creator: StringFilter
+  @Field(() => VoteListRelationFilter, { nullable: true })
+  votes: VoteListRelationFilter
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter
   @Field(() => StringFilter, { nullable: true })

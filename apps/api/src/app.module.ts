@@ -11,6 +11,7 @@ import { join } from 'path'
 
 import { EthersModule } from './ethers/ethers.module'
 import { PersonalitiesModule } from './models/personalities/personalities.module'
+import { VotesModule } from './models/votes/votes.module'
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PersonalitiesModule } from './models/personalities/personalities.module
     EthersModule,
 
     PersonalitiesModule,
+    VotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

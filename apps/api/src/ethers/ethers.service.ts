@@ -6,7 +6,7 @@ import { AbiItem } from 'web3-utils'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { MeilisearchService } from 'src/meilisearch/meilisearch.service'
 
-export const contractAddress = '0x989E4C49390D81705D86a0B8Ba2cd821035635AF'
+export const contractAddress = '0x3346580CdBD7dB5408238362ec6E0302EE537DB5'
 dotenv.config()
 
 @Injectable()
@@ -50,9 +50,9 @@ export class EthersService {
         },
         async (error, event) => {
           console.log(event)
-          const { name } = event.returnValues
+          const { name, creator } = event.returnValues
           const personality = await this.prisma.personality.create({
-            data: { name, downvotes: 0, upvotes: 0 },
+            data: { name, downvotes: 0, upvotes: 0, creator },
           })
 
           await this.meili.addToIndex([{ name, id: personality.id }])
@@ -72,10 +72,21 @@ export class EthersService {
         },
         async (error, event) => {
           console.log(event)
-          const { name, upvotes, downvotes } = event.returnValues
+          const { name, upvotes, downvotes, voter, vote } = event.returnValues
           await this.prisma.personality.update({
             where: { name },
             data: { downvotes: +downvotes, upvotes: +upvotes },
+          })
+
+          await this.prisma.vote.upsert({
+            create: {
+              name,
+              vote: +vote,
+              voter,
+              personality: { connect: { name } },
+            },
+            where: { name_voter: { name, voter } },
+            update: { vote: +vote },
           })
           // Add your logic here
           console.log('Event ', event)

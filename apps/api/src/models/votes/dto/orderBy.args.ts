@@ -1,32 +1,32 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
-import { VoteOrderByRelationAggregateInput } from 'src/models/votes/dto/orderBy.args'
+import { PersonalityOrderByWithRelationInput } from 'src/models/personalities/dto/orderBy.args'
 
 @InputType()
-export class PersonalityOrderByWithRelationInput
+export class VoteOrderByWithRelationInput
   implements
     RestrictProperties<
-      PersonalityOrderByWithRelationInput,
-      Prisma.PersonalityOrderByWithRelationInput
+      VoteOrderByWithRelationInput,
+      Prisma.VoteOrderByWithRelationInput
     >
 {
-  @Field(() => Prisma.SortOrder, { nullable: true })
-  creator: Prisma.SortOrder
   @Field(() => Prisma.SortOrder, { nullable: true })
   id: Prisma.SortOrder
   @Field(() => Prisma.SortOrder, { nullable: true })
   name: Prisma.SortOrder
   @Field(() => Prisma.SortOrder, { nullable: true })
-  upvotes: Prisma.SortOrder
+  vote: Prisma.SortOrder
   @Field(() => Prisma.SortOrder, { nullable: true })
-  downvotes: Prisma.SortOrder
-  @Field(() => VoteOrderByRelationAggregateInput, { nullable: true })
-  votes: VoteOrderByRelationAggregateInput
+  voter: Prisma.SortOrder
+  @Field(() => Prisma.SortOrder, { nullable: true })
+  personalityId: Prisma.SortOrder
+  @Field(() => PersonalityOrderByWithRelationInput, { nullable: true })
+  personality: PersonalityOrderByWithRelationInput
 }
 
 @InputType()
-export class PersonalityOrderByRelationAggregateInput {
+export class VoteOrderByRelationAggregateInput {
   @Field(() => Prisma.SortOrder, { nullable: true })
   _count: Prisma.SortOrder
 }

@@ -3,6 +3,406 @@
   "log": [
     {
       "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:5",
+        "version": {
+          "withMetadata": "c0d30159f92a4f83a6a96dfbe78795d7d53cc587a407e621824c3d4c92325b3c",
+          "withoutMetadata": "60f7d53a580475da7b3177579ecf248048fb3c1f225ddc2faace8f914e5d05a9",
+          "linkedWithoutMetadata": "60f7d53a580475da7b3177579ecf248048fb3c1f225ddc2faace8f914e5d05a9"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:21"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:22"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))": {
+              "label": "mapping(address => mapping(string => int256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_int256)": {
+              "label": "mapping(string => int256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)8_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:5",
+        "version": {
+          "withMetadata": "d50252d51fd5e8132ca8452c571dcbf77cc299903b9cbc818d83d6d18b687b13",
+          "withoutMetadata": "d67317d32de01d7541740d7a36f12de8bd4a629d62808743234836fb7680be67",
+          "linkedWithoutMetadata": "d67317d32de01d7541740d7a36f12de8bd4a629d62808743234836fb7680be67"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:21"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:22"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))": {
+              "label": "mapping(address => mapping(string => int256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_int256)": {
+              "label": "mapping(string => int256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)8_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:5",
+        "version": {
+          "withMetadata": "4da0b6fd8bf83b24686d427ec2adb567ab54ec2e721e276b4f230c1c1d3bd770",
+          "withoutMetadata": "820f77426dd29da7df76aa8b69c506ea2976e99dc48406a221b3e61be326de0e",
+          "linkedWithoutMetadata": "820f77426dd29da7df76aa8b69c506ea2976e99dc48406a221b3e61be326de0e"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:20"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:21"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_int256))": {
+              "label": "mapping(address => mapping(string => int256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_int256)": {
+              "label": "mapping(string => int256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)8_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "contracts/Voting.sol:Voting": {
+        "src": "contracts/Voting.sol:4",
+        "version": {
+          "withMetadata": "0c15367aa5535a59d669e8c833f1a9e6f167115d79b6aff5ee80398fc3dcb073",
+          "withoutMetadata": "584600028e810197d4fdb0532421b89da755bcf538792067cfa105cfbabcd756",
+          "linkedWithoutMetadata": "584600028e810197d4fdb0532421b89da755bcf538792067cfa105cfbabcd756"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "createPersonality(string)",
+          "upvote(string)",
+          "downvote(string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "personalities",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:19"
+            },
+            {
+              "label": "votes",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))",
+              "contract": "Voting",
+              "src": "contracts/Voting.sol:20"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))": {
+              "label": "mapping(address => mapping(string => bool))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_bool)": {
+              "label": "mapping(string => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_string_memory_ptr,t_struct(Personality)8_storage)": {
+              "label": "mapping(string => struct Voting.Personality)",
+              "numberOfBytes": "32"
+            },
+            "t_string_memory_ptr": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Personality)8_storage": {
+              "label": "struct Voting.Personality",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "upvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "downvotes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "contracts/Voting.sol:Voting": {
         "src": "contracts/Voting.sol:4",
         "version": {
           "withMetadata": "75ee0ff3cc7abf8f2915e6396c56e27cd1d5c72dcb9f51085a689d41d3d5e1ad",

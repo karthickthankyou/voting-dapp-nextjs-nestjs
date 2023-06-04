@@ -7,14 +7,27 @@ type Personality {
   name: String!
   upvotes: Int!
   downvotes: Int!
+  creator: String!
+}
+
+type Vote {
+  id: Int!
+  name: String!
+  vote: Int!
+  voter: String!
+  personalityId: Int!
 }
 
 type Query {
   personalities(where: PersonalityWhereInput, orderBy: [PersonalityOrderByWithRelationInput!], cursor: PersonalityWhereUniqueInput, take: Int, skip: Int, distinct: [PersonalityScalarFieldEnum!]): [Personality!]!
   personality(where: PersonalityWhereUniqueInput): Personality!
+  votes(where: VoteWhereInput, orderBy: [VoteOrderByWithRelationInput!], cursor: VoteWhereUniqueInput, take: Int, skip: Int, distinct: [VoteScalarFieldEnum!]): [Vote!]!
+  vote(where: VoteWhereUniqueInput): Vote!
 }
 
 input PersonalityWhereInput {
+  creator: StringFilter
+  votes: VoteListRelationFilter
   id: IntFilter
   name: StringFilter
   upvotes: IntFilter
@@ -22,17 +35,6 @@ input PersonalityWhereInput {
   AND: [PersonalityWhereInput!]
   OR: [PersonalityWhereInput!]
   NOT: [PersonalityWhereInput!]
-}
-
-input IntFilter {
-  equals: Int
-  in: Int
-  notIn: Int
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: Int
 }
 
 input StringFilter {
@@ -55,16 +57,56 @@ enum QueryMode {
   insensitive
 }
 
+input VoteListRelationFilter {
+  every: VoteWhereInput
+  some: VoteWhereInput
+  none: VoteWhereInput
+}
+
+input VoteWhereInput {
+  id: IntFilter
+  name: StringFilter
+  vote: IntFilter
+  voter: StringFilter
+  personalityId: IntFilter
+  personality: PersonalityRelationFilter
+  AND: [VoteWhereInput!]
+  OR: [VoteWhereInput!]
+  NOT: [VoteWhereInput!]
+}
+
+input IntFilter {
+  equals: Int
+  in: Int
+  notIn: Int
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: Int
+}
+
+input PersonalityRelationFilter {
+  is: PersonalityWhereInput
+  isNot: PersonalityWhereInput
+}
+
 input PersonalityOrderByWithRelationInput {
+  creator: SortOrder
   id: SortOrder
   name: SortOrder
   upvotes: SortOrder
   downvotes: SortOrder
+  votes: VoteOrderByRelationAggregateInput
 }
 
 enum SortOrder {
   asc
   desc
+}
+
+input VoteOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input PersonalityWhereUniqueInput {
@@ -77,4 +119,32 @@ enum PersonalityScalarFieldEnum {
   name
   upvotes
   downvotes
+  creator
+}
+
+input VoteOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  vote: SortOrder
+  voter: SortOrder
+  personalityId: SortOrder
+  personality: PersonalityOrderByWithRelationInput
+}
+
+input VoteWhereUniqueInput {
+  name_voter: VoteNameVoterCompoundUniqueInput
+  id: Int
+}
+
+input VoteNameVoterCompoundUniqueInput {
+  name: String!
+  voter: String!
+}
+
+enum VoteScalarFieldEnum {
+  id
+  name
+  vote
+  voter
+  personalityId
 }

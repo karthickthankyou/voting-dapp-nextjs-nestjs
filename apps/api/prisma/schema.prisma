@@ -15,4 +15,17 @@ model Personality {
     name      String @unique
     upvotes   Int
     downvotes Int
+    creator   String
+    votes     Vote[]
+}
+
+model Vote {
+    id            Int          @id @default(autoincrement())
+    name          String
+    vote          Int
+    voter         String
+    personality   Personality? @relation(fields: [personalityId], references: [id])
+    personalityId Int?
+
+    @@unique([name, voter])
 }

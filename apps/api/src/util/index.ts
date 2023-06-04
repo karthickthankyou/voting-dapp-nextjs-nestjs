@@ -8,6 +8,12 @@ export const abi = [
         name: 'name',
         type: 'string',
       },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'creator',
+        type: 'address',
+      },
     ],
     name: 'PersonalityCreated',
     type: 'event',
@@ -32,6 +38,18 @@ export const abi = [
         internalType: 'uint256',
         name: 'downvotes',
         type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'voter',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'int256',
+        name: 'vote',
+        type: 'int256',
       },
     ],
     name: 'VotingUpdated',
@@ -121,9 +139,9 @@ export const abi = [
     name: 'votes',
     outputs: [
       {
-        internalType: 'bool',
+        internalType: 'int256',
         name: '',
-        type: 'bool',
+        type: 'int256',
       },
     ],
     stateMutability: 'view',
