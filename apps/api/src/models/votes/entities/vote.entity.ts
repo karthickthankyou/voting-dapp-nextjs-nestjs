@@ -1,4 +1,4 @@
-import { ObjectType } from '@nestjs/graphql'
+import { ArgsType, Field, ObjectType } from '@nestjs/graphql'
 import { Vote as VoteType } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 
@@ -11,4 +11,10 @@ export class Vote implements RestrictProperties<Vote, VoteType> {
   personalityId: number
   // Todo fill all properties. To make it nullable add below.
   // @Field(() => String, { nullable: true })
+}
+
+@ArgsType()
+export class OnVotedArgs {
+  @Field()
+  address: string
 }

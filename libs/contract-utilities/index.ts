@@ -32,16 +32,19 @@ export async function upvote({
   contract,
   account,
   name,
-}: ActionType): Promise<void> {
+}: ActionType): Promise<string> {
   try {
     const currentVote = await contract.methods.votes(account, name).call()
     if (currentVote === '1') {
       alert('You have already upvoted this personality')
+      return currentVote
     } else {
       await contract.methods.upvote(name).send({ from: account })
+      return currentVote
     }
   } catch (err) {
     console.error(err)
+    return 'error' // or whatever string you want to represent error
   }
 }
 
@@ -49,16 +52,19 @@ export async function downvote({
   contract,
   account,
   name,
-}: ActionType): Promise<void> {
+}: ActionType): Promise<string> {
   try {
     const currentVote = await contract.methods.votes(account, name).call()
     if (currentVote === '-1') {
       alert('You have already downvoted this personality')
+      return currentVote
     } else {
       await contract.methods.downvote(name).send({ from: account })
+      return currentVote
     }
   } catch (err) {
     console.error(err)
+    return 'error'
   }
 }
 

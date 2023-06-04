@@ -85,7 +85,7 @@ export class EthersService {
             data: { downvotes: +downvotes, upvotes: +upvotes },
           })
 
-          await this.prisma.vote.upsert({
+          const updatedVote = await this.prisma.vote.upsert({
             create: {
               name,
               vote: +vote,
@@ -94,6 +94,10 @@ export class EthersService {
             },
             where: { name_voter: { name, voter } },
             update: { vote: +vote },
+          })
+
+          this.pubSub.publish('onVoted', {
+            onVoted: updatedVote,
           })
           // Add your logic here
           console.log('Event ', event)

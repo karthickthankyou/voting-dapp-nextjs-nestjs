@@ -40,3 +40,39 @@ export const personalityCreated = gql`
     }
   }
 `
+
+export const onVoted = gql`
+  subscription onVoted($address: String!) {
+    onVoted(address: $address) {
+      name
+      id
+      personalityId
+      vote
+      voter
+    }
+  }
+`
+
+export const personality = gql`
+  query personality($where: PersonalityWhereUniqueInput) {
+    personality(where: $where) {
+      creator
+      downvotes
+      id
+      name
+      upvotes
+    }
+  }
+`
+
+export const vote = gql`
+  query vote($where: VoteWhereUniqueInput) {
+    vote(where: $where) {
+      id
+      name
+      personalityId
+      vote
+      voter
+    }
+  }
+`

@@ -150,7 +150,13 @@ export type StringFilter = {
 
 export type Subscription = {
   __typename?: 'Subscription';
+  onVoted?: Maybe<Vote>;
   personalityCreated?: Maybe<Personality>;
+};
+
+
+export type SubscriptionOnVotedArgs = {
+  address: Scalars['String'];
 };
 
 export type Vote = {
@@ -228,12 +234,36 @@ export type PersonalityCreatedSubscriptionVariables = Exact<{ [key: string]: nev
 
 export type PersonalityCreatedSubscription = { __typename?: 'Subscription', personalityCreated?: { __typename?: 'Personality', id: number, name: string, upvotes: number, downvotes: number, creator: string } | null };
 
+export type OnVotedSubscriptionVariables = Exact<{
+  address: Scalars['String'];
+}>;
+
+
+export type OnVotedSubscription = { __typename?: 'Subscription', onVoted?: { __typename?: 'Vote', name: string, id: number, personalityId: number, vote: number, voter: string } | null };
+
+export type PersonalityQueryVariables = Exact<{
+  where?: InputMaybe<PersonalityWhereUniqueInput>;
+}>;
+
+
+export type PersonalityQuery = { __typename?: 'Query', personality: { __typename?: 'Personality', creator: string, downvotes: number, id: number, name: string, upvotes: number } };
+
+export type VoteQueryVariables = Exact<{
+  where?: InputMaybe<VoteWhereUniqueInput>;
+}>;
+
+
+export type VoteQuery = { __typename?: 'Query', vote: { __typename?: 'Vote', id: number, name: string, personalityId: number, vote: number, voter: string } };
+
 export const namedOperations = {
   Query: {
-    personalities: 'personalities'
+    personalities: 'personalities',
+    personality: 'personality',
+    vote: 'vote'
   },
   Subscription: {
-    personalityCreated: 'personalityCreated'
+    personalityCreated: 'personalityCreated',
+    onVoted: 'onVoted'
   }
 }
 
@@ -324,3 +354,115 @@ export function usePersonalityCreatedSubscription(baseOptions?: Apollo.Subscript
       }
 export type PersonalityCreatedSubscriptionHookResult = ReturnType<typeof usePersonalityCreatedSubscription>;
 export type PersonalityCreatedSubscriptionResult = Apollo.SubscriptionResult<PersonalityCreatedSubscription>;
+export const OnVotedDocument = /*#__PURE__*/ gql`
+    subscription onVoted($address: String!) {
+  onVoted(address: $address) {
+    name
+    id
+    personalityId
+    vote
+    voter
+  }
+}
+    `;
+
+/**
+ * __useOnVotedSubscription__
+ *
+ * To run a query within a React component, call `useOnVotedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOnVotedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOnVotedSubscription({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useOnVotedSubscription(baseOptions: Apollo.SubscriptionHookOptions<OnVotedSubscription, OnVotedSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<OnVotedSubscription, OnVotedSubscriptionVariables>(OnVotedDocument, options);
+      }
+export type OnVotedSubscriptionHookResult = ReturnType<typeof useOnVotedSubscription>;
+export type OnVotedSubscriptionResult = Apollo.SubscriptionResult<OnVotedSubscription>;
+export const PersonalityDocument = /*#__PURE__*/ gql`
+    query personality($where: PersonalityWhereUniqueInput) {
+  personality(where: $where) {
+    creator
+    downvotes
+    id
+    name
+    upvotes
+  }
+}
+    `;
+
+/**
+ * __usePersonalityQuery__
+ *
+ * To run a query within a React component, call `usePersonalityQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePersonalityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePersonalityQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function usePersonalityQuery(baseOptions?: Apollo.QueryHookOptions<PersonalityQuery, PersonalityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PersonalityQuery, PersonalityQueryVariables>(PersonalityDocument, options);
+      }
+export function usePersonalityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PersonalityQuery, PersonalityQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PersonalityQuery, PersonalityQueryVariables>(PersonalityDocument, options);
+        }
+export type PersonalityQueryHookResult = ReturnType<typeof usePersonalityQuery>;
+export type PersonalityLazyQueryHookResult = ReturnType<typeof usePersonalityLazyQuery>;
+export type PersonalityQueryResult = Apollo.QueryResult<PersonalityQuery, PersonalityQueryVariables>;
+export const VoteDocument = /*#__PURE__*/ gql`
+    query vote($where: VoteWhereUniqueInput) {
+  vote(where: $where) {
+    id
+    name
+    personalityId
+    vote
+    voter
+  }
+}
+    `;
+
+/**
+ * __useVoteQuery__
+ *
+ * To run a query within a React component, call `useVoteQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVoteQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVoteQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useVoteQuery(baseOptions?: Apollo.QueryHookOptions<VoteQuery, VoteQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VoteQuery, VoteQueryVariables>(VoteDocument, options);
+      }
+export function useVoteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VoteQuery, VoteQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VoteQuery, VoteQueryVariables>(VoteDocument, options);
+        }
+export type VoteQueryHookResult = ReturnType<typeof useVoteQuery>;
+export type VoteLazyQueryHookResult = ReturnType<typeof useVoteLazyQuery>;
+export type VoteQueryResult = Apollo.QueryResult<VoteQuery, VoteQueryVariables>;

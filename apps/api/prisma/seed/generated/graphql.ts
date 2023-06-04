@@ -149,7 +149,13 @@ export type StringFilter = {
 
 export type Subscription = {
   __typename?: 'Subscription';
+  onVoted?: Maybe<Vote>;
   personalityCreated?: Maybe<Personality>;
+};
+
+
+export type SubscriptionOnVotedArgs = {
+  address: Scalars['String'];
 };
 
 export type Vote = {

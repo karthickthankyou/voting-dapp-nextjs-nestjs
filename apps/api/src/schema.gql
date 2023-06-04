@@ -156,4 +156,5 @@ enum VoteScalarFieldEnum {
 
 type Subscription {
   personalityCreated: Personality
+  onVoted(address: String!): Vote
 }

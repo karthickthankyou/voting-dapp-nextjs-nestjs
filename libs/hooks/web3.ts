@@ -16,6 +16,7 @@ declare global {
 export const useAccount = () => {
   const [account, setAccount] = useState('')
   const [contract, setContract] = useState<Contract | null>()
+  const [isOwner, setIsOwner] = useState(false)
 
   useEffect(() => {
     loadWeb3()
@@ -51,7 +52,11 @@ export const useAccount = () => {
       contractAddressJson.contractAddress,
     )
     setContract(contract)
+
+    // Check if the user is the owner of the contract
+    const contractOwner = await contract?.methods.owner().call()
+    setIsOwner(accounts[0] === contractOwner)
   }
 
-  return { account, contract }
+  return { account, contract, isOwner }
 }

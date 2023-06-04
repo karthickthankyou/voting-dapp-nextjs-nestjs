@@ -1,12 +1,12 @@
-import { useAccount } from '@/hooks/web3'
+import { useAccount } from '@personality-voting/hooks/web3'
 import { CreatePersonality } from '@personality-voting/ui/src/components/templates/CreatePersonality'
 import { ListPersonalities } from '@personality-voting/ui/src/components/templates/ListPersonalities'
 
 export default function Home() {
-  const { account, contract } = useAccount()
+  const { account, contract, isOwner } = useAccount()
 
   return (
-    <main className="flex flex-col items-start gap-6 ">
+    <main className="bg-gray-25 ">
       <CreatePersonality />
       <ListPersonalities />
       <button
@@ -77,10 +77,7 @@ export default function Home() {
       <button
         onClick={async () => {
           try {
-            // First check if the account requesting is the owner of the contract
-            const contractOwner = await contract?.methods.owner().call()
-            console.log('contractOwner ', contractOwner)
-            if (account !== contractOwner) {
+            if (isOwner) {
               alert(
                 'You are not the owner of the contract and cannot remove a personality!',
               )

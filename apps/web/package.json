@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@personality-voting/hooks": "*",
     "@personality-voting/forms": "*",
     "@personality-voting/network": "*",
     "@personality-voting/ui": "*",
