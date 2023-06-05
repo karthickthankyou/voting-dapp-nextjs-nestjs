@@ -33,7 +33,8 @@
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.0.21",
     "react-markdown": "^8.0.7",
-    "react-quill": "^2.0.0"
+    "react-quill": "^2.0.0",
+    "react-spring": "^9.7.1"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.2",

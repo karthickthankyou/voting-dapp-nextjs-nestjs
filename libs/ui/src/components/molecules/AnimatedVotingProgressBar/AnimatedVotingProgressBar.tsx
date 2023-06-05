@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { VotingProgressBar } from '../VotingProgressBar'
+import { useSpring, animated } from 'react-spring'
+import { easings } from '@react-spring/web'
+
 import { RadialScore } from '../RadialScore'
 
 export const AnimatedVotingProgressBar = () => {
   const [score, setScore] = useState(0)
+  const [targetScore, setTargetScore] = useState(0)
+
+  const props = useSpring({
+    score: targetScore,
+    config: {
+      duration: 3000,
+      easing: easings.easeInOutSine,
+    },
+  })
 
   useEffect(() => {
-    // Set an interval to update the score every 100ms
     const intervalId = setInterval(() => {
-      // Calculate the next score, ensuring it stays within the range of -100 to 100
-      const nextScore = score + (Math.random() < 0.5 ? -1 : 1)
-      if (nextScore < -100 || nextScore > 100) return
+      setTargetScore(Math.floor(Math.random() * 201) - 100)
+    }, 3000)
 
-      setScore(nextScore)
-    }, 100)
-
-    // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId)
-  }, [score])
+  }, [])
 
-  return <RadialScore score={score} />
+  const AnimatedRadialScore = animated(RadialScore)
+
+  // Round animated value before passing
+  const roundedScore = props.score.to((value) => Math.round(value))
+
+  return <AnimatedRadialScore score={roundedScore} />
 }
