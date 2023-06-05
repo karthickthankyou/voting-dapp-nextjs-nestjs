@@ -8,7 +8,7 @@ export default function Home() {
   const { account, contract, isOwner } = useAccount()
 
   return (
-    <main className="bg-gray-25 ">
+    <main className="py-24 bg-gray-25 ">
       <Container>
         <ListPersonalities />
       </Container>

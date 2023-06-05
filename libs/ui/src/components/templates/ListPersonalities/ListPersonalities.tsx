@@ -20,20 +20,28 @@ export const ListPersonalities = ({}: IListPersonalitiesProps) => {
   const [skip, setSkip] = useState(0)
   const [take, setTake] = useState(12)
   const [searchTerm, setSearchTerm] = useState('')
-  const [orderBy, setOrderBy] = useState<PersonalityOrderByWithRelationInput>({
-    name: SortOrder.Asc,
-  })
+  const [orderBy, setOrderBy] =
+    useState<PersonalityOrderByWithRelationInput | null>(null)
 
-  const debouncedSearchTerm = useDebouncedValue(searchTerm, 300)
+  const debouncedSearchTerm = useDebouncedValue(searchTerm, 400)
 
   const handleSort = (value: string) => {
+    if (!value) {
+      setOrderBy(null)
+      return
+    }
     let [field, direction] = value.split('_')
     direction = direction === 'ASC' ? SortOrder.Asc : SortOrder.Desc
     setOrderBy({ [field]: direction })
   }
 
   const [fetchPersons, { data, loading, error }] = usePersonalitiesLazyQuery({
-    variables: { skip, take, searchTerm: debouncedSearchTerm, orderBy },
+    variables: {
+      skip,
+      take,
+      searchTerm: debouncedSearchTerm,
+      ...(orderBy ? { orderBy } : null),
+    },
   })
 
   const { data: subscriptionData } = usePersonalityCreatedSubscription()
@@ -51,7 +59,7 @@ export const ListPersonalities = ({}: IListPersonalitiesProps) => {
   }, [subscriptionData])
 
   return (
-    <div className="pt-12 mb-4">
+    <div className="mb-4 ">
       <div className="flex flex-col items-center max-w-lg gap-4 mx-auto mb-8 justify-stretch">
         <SearchBar
           className="w-full"
@@ -91,6 +99,7 @@ export const SortDropdown = ({
     className="w-full max-w-xs rounded-full"
     onChange={(e) => handleSort(e.target.value)}
   >
+    <option value="">Relevance</option>
     <option value="name_ASC">A - Z</option>
     <option value="name_DESC">Z - A</option>
     <option value="upvotes_DESC">Upvotes &darr;</option>
