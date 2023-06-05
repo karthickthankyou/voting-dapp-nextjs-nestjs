@@ -1,11 +1,16 @@
 export const RadialScore = ({
   score,
-  size = 10,
+  strokeWidth = '1',
+  sizePercentage = 0.99,
+  baseCircleClasses = 'text-gray-50',
 }: {
   score: number
-  size?: number
+  strokeWidth?: string
+  sizePercentage?: number
+  baseCircleClasses?: string
 }) => {
-  const radius = (size * 0.9) / 2 // 90% of half of the size
+  const size = 100 // Control the size of SVG elements
+  const radius = (size * sizePercentage) / 2 // 98% of half of the size
   const circumference = 2 * Math.PI * radius
   const offset = circumference - (score / 100) * circumference
 
@@ -15,7 +20,7 @@ export const RadialScore = ({
   }
 
   return (
-    <div className={`w-${size} h-${size}`}>
+    <div className="w-full h-full">
       <svg
         className="w-full h-full"
         viewBox={`0 0 ${size} ${size}`}
@@ -23,9 +28,9 @@ export const RadialScore = ({
       >
         <g transform={`rotate(-90 ${size / 2} ${size / 2})`}>
           <circle
-            className="text-gray-100 "
+            className={baseCircleClasses}
             stroke="currentColor"
-            strokeWidth="1"
+            strokeWidth={strokeWidth}
             fill="transparent"
             r={radius}
             cx={size / 2}
@@ -34,23 +39,13 @@ export const RadialScore = ({
           <circle
             className={`${score > 0 ? 'text-green-500' : 'text-red-600'}`}
             stroke="currentColor"
-            strokeWidth="1"
+            strokeWidth={strokeWidth}
             fill="transparent"
             r={radius}
             cx={size / 2}
             cy={size / 2}
             style={styleObject}
           />
-          <text
-            x="50%"
-            y="50%"
-            textAnchor="middle"
-            dy=".3em"
-            transform={`rotate(90 ${size / 2} ${size / 2})`}
-            fontSize={3}
-          >
-            {score}
-          </text>
         </g>
       </svg>
     </div>

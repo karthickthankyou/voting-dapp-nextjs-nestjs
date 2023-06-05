@@ -13,11 +13,44 @@ import { useEffect, useState } from 'react'
 import { Dialog } from '../../atoms/Dialog'
 import { produce } from 'immer'
 import { VotingProgressBar } from '../../molecules/VotingProgressBar'
+import { RadialScore } from '../../molecules/RadialScore'
+import { nickNames } from './nicknames'
 
 export type PersonalityQuery = PersonalitiesQuery['personalities'][number]
 
+export const getNickname = (score: number): string => {
+  if (score < -80) {
+    return nickNames['-80'][Math.floor(Math.random() * nickNames['-80'].length)]
+  } else if (score < -60) {
+    return nickNames['-60'][Math.floor(Math.random() * nickNames['-60'].length)]
+  } else if (score < -40) {
+    return nickNames['-40'][Math.floor(Math.random() * nickNames['-40'].length)]
+  } else if (score < -20) {
+    return nickNames['-20'][Math.floor(Math.random() * nickNames['-20'].length)]
+  } else if (score < 0) {
+    return nickNames['0'][Math.floor(Math.random() * nickNames['0'].length)]
+  } else if (score < 20) {
+    return nickNames['20'][Math.floor(Math.random() * nickNames['20'].length)]
+  } else if (score < 40) {
+    return nickNames['40'][Math.floor(Math.random() * nickNames['40'].length)]
+  } else if (score < 60) {
+    return nickNames['60'][Math.floor(Math.random() * nickNames['60'].length)]
+  } else if (score < 80) {
+    return nickNames['80'][Math.floor(Math.random() * nickNames['80'].length)]
+  }
+
+  return nickNames['100'][Math.floor(Math.random() * nickNames['100'].length)]
+}
 export interface IPersonalityCardProps {
   personality: PersonalityQuery
+}
+
+const calculatePercentage = (upvotes: number, downvotes: number): number => {
+  if (upvotes === 0 && downvotes === 0) return 0
+
+  const totalVotes = upvotes + downvotes
+  const netVotes = upvotes - downvotes
+  return Math.round((netVotes / totalVotes) * 100)
 }
 
 export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
@@ -93,45 +126,62 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
     })
   }
 
-  console.log(personality.name, personality.myVote?.vote)
-
+  const score = calculatePercentage(
+    personality.upvotes || 0,
+    personality.downvotes || 0,
+  )
   return (
-    <div className="flex flex-col " key={personality.id}>
-      <div className="flex items-center">
-        <VotingProgressBar
-          downvotes={personality.downvotes}
-          upvotes={personality.upvotes}
-        />
-        <div className="font-bold">{personality.name}</div>
+    <div>
+      <div
+        className="flex flex-col items-center gap-1 bg-white rounded-full "
+        key={personality.id}
+      >
+        <div className="flex justify-center w-full ">
+          <div className="relative w-full h-full">
+            <RadialScore
+              score={score}
+              strokeWidth="1.2"
+              baseCircleClasses="text-white"
+            />
+            <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full gap-2 ">
+              <div className="text-4xl font-thin">{score}</div>
+            </div>
+            <div className="absolute top-0 left-0 flex flex-col items-center justify-end w-full h-full gap-2 pb-6 ">
+              <div className="flex gap-2">
+                <PlainButton
+                  loading={upvoting}
+                  className="flex items-center justify-center gap-1 bg-white rounded-xl "
+                  onClick={() => upvotePersonality()}
+                >
+                  <IconThumbUp
+                    className={`stroke-gray-500 stroke-1 ${
+                      personality.myVote?.vote === 1 ? 'fill-gray-200  ' : ''
+                    }`}
+                  />
+                  <div className="font-light">{personality.upvotes}</div>
+                </PlainButton>
+                <PlainButton
+                  loading={downvoting}
+                  className="flex items-center justify-center gap-1 bg-white rounded-xl "
+                  onClick={() => downvotePersonality()}
+                >
+                  <IconThumbDown
+                    className={`stroke-gray-500 stroke-1 ${
+                      personality.myVote?.vote === -1 ? 'fill-gray-200  ' : ''
+                    }`}
+                  />
+                  <div className="font-light">{personality.downvotes}</div>
+                </PlainButton>
+              </div>
+            </div>
+          </div>
+        </div>
+        {isOwner ? <OwnerDialog name={personality.name} /> : null}
       </div>
-
-      <div className="flex gap-1">
-        <PlainButton
-          loading={upvoting}
-          className="flex items-center justify-center w-12 h-12 gap-1 bg-white rounded-xl hover:shadow-lg"
-          onClick={() => upvotePersonality()}
-        >
-          <IconThumbUp
-            className={`stroke-black ${
-              personality.myVote?.vote === 1 ? 'fill-gray  ' : ''
-            }`}
-          />
-          <div>{personality.upvotes}</div>
-        </PlainButton>
-        <PlainButton
-          loading={downvoting}
-          className="flex items-center justify-center w-12 h-12 gap-1 bg-white rounded-xl hover:shadow-lg"
-          onClick={() => downvotePersonality()}
-        >
-          <IconThumbDown
-            className={`stroke-black ${
-              personality.myVote?.vote === -1 ? 'fill-gray  ' : ''
-            }`}
-          />
-          <div>{personality.downvotes}</div>
-        </PlainButton>
+      <div className="mt-2 text-center">
+        <div className="mb-1 font-bold ">{personality.name}</div>
+        <div className="text-sm text-gray">{getNickname(score)}</div>
       </div>
-      {isOwner ? <OwnerDialog name={personality.name} /> : null}
     </div>
   )
 }

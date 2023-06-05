@@ -29,5 +29,13 @@ export const AnimatedVotingProgressBar = () => {
   // Round animated value before passing
   const roundedScore = props.score.to((value) => Math.round(value))
 
-  return <AnimatedRadialScore score={roundedScore} />
+  return (
+    <div className="rounded-full shadow-xl ">
+      <AnimatedRadialScore
+        score={roundedScore}
+        strokeWidth={'4'}
+        sizePercentage={0.96}
+      />
+    </div>
+  )
 }

@@ -5,7 +5,7 @@ const brandHue = 116
 // #ffdd00 for brandHue 52
 const primaryPallete = {
   DEFAULT: `hsl(${brandHue}, 100%, 50%)`,
-  25: `hsl(${brandHue}, 100%, 98%)`,
+  25: `hsl(${brandHue}, 100%, 96%)`,
   50: `hsl(${brandHue}, 100%, 92%)`,
   100: `hsl(${brandHue}, 100%, 84%)`,
   200: `hsl(${brandHue}, 100%, 75%)`,
@@ -19,7 +19,7 @@ const primaryPallete = {
 }
 const grayPallete = {
   DEFAULT: `hsl(${brandHue}, 2%, 32%)`,
-  25: `hsl(${brandHue}, 2%, 98%)`,
+  25: `hsl(${brandHue}, 2%, 94%)`,
   50: `hsl(${brandHue}, 2%, 90%)`,
   100: `hsl(${brandHue}, 2%, 80%)`,
   200: `hsl(${brandHue}, 2%, 70%)`,

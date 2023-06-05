@@ -10,7 +10,6 @@ export default function Home() {
   return (
     <main className="bg-gray-25 ">
       <Container>
-        <CreatePersonality />
         <ListPersonalities />
       </Container>
     </main>

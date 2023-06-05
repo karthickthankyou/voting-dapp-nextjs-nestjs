@@ -11,6 +11,8 @@ import { PersonalityCard } from '../../organisms/PersonalityCard'
 import { HtmlLabel } from '../../atoms/HtmlLabel'
 import { HtmlInput } from '../../atoms/HtmlInput'
 import { HtmlSelect } from '../../atoms/HtmlSelect'
+import { SearchBar } from '../../molecules/SearchBar'
+import { useDebouncedValue } from '@personality-voting/hooks/async'
 
 export interface IListPersonalitiesProps {}
 
@@ -22,6 +24,8 @@ export const ListPersonalities = ({}: IListPersonalitiesProps) => {
     name: SortOrder.Asc,
   })
 
+  const debouncedSearchTerm = useDebouncedValue(searchTerm, 300)
+
   const handleSort = (value: string) => {
     let [field, direction] = value.split('_')
     direction = direction === 'ASC' ? SortOrder.Asc : SortOrder.Desc
@@ -29,7 +33,7 @@ export const ListPersonalities = ({}: IListPersonalitiesProps) => {
   }
 
   const [fetchPersons, { data, loading, error }] = usePersonalitiesLazyQuery({
-    variables: { skip, take, searchTerm, orderBy },
+    variables: { skip, take, searchTerm: debouncedSearchTerm, orderBy },
   })
 
   const { data: subscriptionData } = usePersonalityCreatedSubscription()
@@ -47,20 +51,17 @@ export const ListPersonalities = ({}: IListPersonalitiesProps) => {
   }, [subscriptionData])
 
   return (
-    <div>
-      <div className="mb-2 text-lg font-semibold">Personalities</div>
-      <div className="flex gap-2">
-        <HtmlLabel title="Search">
-          <HtmlInput
-            placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTerm}
-          />
-        </HtmlLabel>
+    <div className="pt-12 mb-4">
+      <div className="flex flex-col items-center max-w-lg gap-4 mx-auto mb-8 justify-stretch">
+        <SearchBar
+          className="w-full"
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
         <SortDropdown handleSort={handleSort} />
       </div>
       <ShowData
-        className="grid grid-cols-2 lg:grid-cols-3"
+        className="grid gap-12 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         error={error?.message}
         loading={loading}
         hidePagination={Boolean(searchTerm)}
@@ -86,14 +87,15 @@ export const SortDropdown = ({
 }: {
   handleSort: (value: string) => void
 }) => (
-  <HtmlLabel title="Sort">
-    <HtmlSelect onChange={(e) => handleSort(e.target.value)}>
-      <option value="name_ASC">A - Z</option>
-      <option value="name_DESC">Z - A</option>
-      <option value="upvotes_ASC">Lowest to Highest Upvotes</option>
-      <option value="upvotes_DESC">Highest to Lowest Upvotes</option>
-      <option value="downvotes_ASC">Lowest to Highest Downvotes</option>
-      <option value="downvotes_DESC">Highest to Lowest Downvotes</option>
-    </HtmlSelect>
-  </HtmlLabel>
+  <HtmlSelect
+    className="w-full max-w-xs rounded-full"
+    onChange={(e) => handleSort(e.target.value)}
+  >
+    <option value="name_ASC">A - Z</option>
+    <option value="name_DESC">Z - A</option>
+    <option value="upvotes_DESC">Upvotes &darr;</option>
+    <option value="upvotes_ASC">Upvotes &uarr;</option>
+    <option value="downvotes_DESC">Downvotes &darr;</option>
+    <option value="downvotes_ASC">Downvotes &uarr;</option>
+  </HtmlSelect>
 )

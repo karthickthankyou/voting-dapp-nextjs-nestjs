@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { catchError, debounceTime, EMPTY, Subject, tap } from 'rxjs'
 
 // Define the type for the async function that will be passed to the hook.
 type AsyncFunction<T extends any[]> = (...args: T) => Promise<any>
@@ -36,3 +37,32 @@ export function useAsync<T extends any[]>(
 
   return [{ data, loading, error }, wrappedFunc]
 }
+
+const useDebounce = (delay: number = 1000) => {
+  const [debouncedSet$] = useState(() => new Subject<() => void>())
+  useEffect(() => {
+    const subscription = debouncedSet$
+      .pipe(
+        debounceTime(delay),
+        tap((func) => func()),
+        catchError(() => EMPTY),
+      )
+      .subscribe()
+    return () => subscription.unsubscribe()
+  }, [delay, debouncedSet$])
+
+  return debouncedSet$
+}
+
+const useDebouncedValue = <T>(value: T, delay: number = 1000) => {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+  const debouncedSet$ = useDebounce(delay)
+
+  useEffect(() => {
+    debouncedSet$.next(() => setDebouncedValue(value))
+  }, [debouncedSet$, value])
+
+  return debouncedValue
+}
+
+export { useDebounce, useDebouncedValue }
