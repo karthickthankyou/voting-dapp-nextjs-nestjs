@@ -1,0 +1,1 @@
+export { VotingProgressBar } from './VotingProgressBar'

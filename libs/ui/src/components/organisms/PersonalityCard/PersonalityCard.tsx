@@ -12,6 +12,7 @@ import { useApolloClient } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Dialog } from '../../atoms/Dialog'
 import { produce } from 'immer'
+import { VotingProgressBar } from '../../molecules/VotingProgressBar'
 
 export type PersonalityQuery = PersonalitiesQuery['personalities'][number]
 
@@ -96,7 +97,13 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
 
   return (
     <div className="flex flex-col " key={personality.id}>
-      <div className="font-bold">{personality.name}</div>
+      <div className="flex items-center">
+        <VotingProgressBar
+          downvotes={personality.downvotes}
+          upvotes={personality.upvotes}
+        />
+        <div className="font-bold">{personality.name}</div>
+      </div>
 
       <div className="flex gap-1">
         <PlainButton
@@ -105,8 +112,8 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
           onClick={() => upvotePersonality()}
         >
           <IconThumbUp
-            className={`${
-              personality.myVote?.vote === 1 ? 'fill-primary' : ''
+            className={`stroke-black ${
+              personality.myVote?.vote === 1 ? 'fill-gray  ' : ''
             }`}
           />
           <div>{personality.upvotes}</div>
@@ -117,8 +124,8 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
           onClick={() => downvotePersonality()}
         >
           <IconThumbDown
-            className={`${
-              personality.myVote?.vote === -1 ? 'fill-primary' : ''
+            className={`stroke-black ${
+              personality.myVote?.vote === -1 ? 'fill-gray  ' : ''
             }`}
           />
           <div>{personality.downvotes}</div>

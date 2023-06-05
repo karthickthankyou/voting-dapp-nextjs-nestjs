@@ -1,6 +1,6 @@
 const colors = require('tailwindcss/colors')
 
-const brandHue = 52
+const brandHue = 116
 
 // #ffdd00 for brandHue 52
 const primaryPallete = {
@@ -31,6 +31,20 @@ const grayPallete = {
   800: `hsl(${brandHue}, 2%, 08%)`,
   900: `hsl(${brandHue}, 2%, 04%)`,
 }
+const bluePallete = {
+  DEFAULT: `hsl(220, 100%, 32%)`,
+  25: `hsl(220, 100%, 98%)`,
+  50: `hsl(220, 100%, 90%)`,
+  100: `hsl(220, 100%, 80%)`,
+  200: `hsl(220, 100%, 70%)`,
+  300: `hsl(220, 100%, 60%)`,
+  400: `hsl(220, 100%, 50%)`,
+  500: `hsl(220, 100%, 32%)`,
+  600: `hsl(220, 100%, 24%)`,
+  700: `hsl(220, 100%, 16%)`,
+  800: `hsl(220, 100%, 08%)`,
+  900: `hsl(220, 100%, 04%)`,
+}
 
 // #FBD813
 const yellowPallete = {
@@ -46,6 +60,20 @@ const yellowPallete = {
   700: 'hsl(51, 97%, 24%)',
   800: 'hsl(51, 97%, 10%)',
   900: 'hsl(51, 97%, 04%)',
+}
+const orangePallete = {
+  DEFAULT: 'hsl(30, 100%, 50%)',
+  25: 'hsl(30, 97%, 98%)',
+  50: 'hsl(30, 97%, 92%)',
+  100: 'hsl(30, 97%, 84%)',
+  200: 'hsl(30, 97%, 75%)',
+  300: 'hsl(30, 97%, 66%)',
+  400: 'hsl(30, 97%, 58%)',
+  500: 'hsl(30, 97%, 50%)',
+  600: 'hsl(30, 97%, 38%)',
+  700: 'hsl(30, 97%, 24%)',
+  800: 'hsl(30, 97%, 10%)',
+  900: 'hsl(30, 97%, 04%)',
 }
 const greenPallete = {
   DEFAULT: 'hsl(116, 100%, 27%)',
@@ -214,6 +242,8 @@ module.exports.colorsConfig = {
   red: redPallete,
   green: greenPallete,
   yellow: yellowPallete,
+  orange: orangePallete,
+  blue: bluePallete,
   gray: grayPallete,
   accent: colors.black,
 }

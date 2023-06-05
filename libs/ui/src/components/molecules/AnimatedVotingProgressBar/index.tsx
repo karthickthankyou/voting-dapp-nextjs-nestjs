@@ -1,0 +1,1 @@
+export { AnimatedVotingProgressBar } from './AnimatedVotingProgressBar'

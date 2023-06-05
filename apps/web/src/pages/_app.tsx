@@ -1,10 +1,15 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { ApolloProvider } from '@personality-voting/network/src/config/apollo'
+import { Logo } from '@personality-voting/ui/src/components/atoms/Logo'
+import { Container } from '@personality-voting/ui/src/components/atoms/Container'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider>
+      <Container className="my-2">
+        <Logo />
+      </Container>
       <Component {...pageProps} />
     </ApolloProvider>
   )
