@@ -8,6 +8,7 @@ export const personalities = gql`
     $cursor: PersonalityWhereUniqueInput
     $orderBy: [PersonalityOrderByWithRelationInput!]
     $where: PersonalityWhereInput
+    $searchTerm: String!
   ) {
     personalities(
       distinct: $distinct
@@ -16,6 +17,7 @@ export const personalities = gql`
       cursor: $cursor
       orderBy: $orderBy
       where: $where
+      searchTerm: $searchTerm
     ) {
       upvotes
       name

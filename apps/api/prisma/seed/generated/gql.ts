@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as types from './graphql';
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import * as types from './graphql'
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core'
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,8 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query personalities(\n    $distinct: [PersonalityScalarFieldEnum!]\n    $skip: Int\n    $take: Int\n    $cursor: PersonalityWhereUniqueInput\n    $orderBy: [PersonalityOrderByWithRelationInput!]\n    $where: PersonalityWhereInput\n  ) {\n    personalities(\n      distinct: $distinct\n      skip: $skip\n      take: $take\n      cursor: $cursor\n      orderBy: $orderBy\n      where: $where\n    ) {\n      upvotes\n      name\n      id\n      downvotes\n      creator\n    }\n  }\n": types.PersonalitiesDocument,
-};
+  '\n  query personalities(\n    $distinct: [PersonalityScalarFieldEnum!]\n    $skip: Int\n    $take: Int\n    $cursor: PersonalityWhereUniqueInput\n    $orderBy: [PersonalityOrderByWithRelationInput!]\n    $where: PersonalityWhereInput\n    $searchTerm: String!\n  ) {\n    personalities(\n      distinct: $distinct\n      skip: $skip\n      take: $take\n      cursor: $cursor\n      orderBy: $orderBy\n      where: $where\n      searchTerm: $searchTerm\n    ) {\n      upvotes\n      name\n      id\n      downvotes\n      creator\n    }\n    personalitiesCount(where: $where) {\n      count\n    }\n  }\n':
+    types.PersonalitiesDocument,
+}
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -28,15 +29,18 @@ const documents = {
  * The query argument is unknown!
  * Please regenerate the types.
  */
-export function graphql(source: string): unknown;
+export function graphql(source: string): unknown
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query personalities(\n    $distinct: [PersonalityScalarFieldEnum!]\n    $skip: Int\n    $take: Int\n    $cursor: PersonalityWhereUniqueInput\n    $orderBy: [PersonalityOrderByWithRelationInput!]\n    $where: PersonalityWhereInput\n  ) {\n    personalities(\n      distinct: $distinct\n      skip: $skip\n      take: $take\n      cursor: $cursor\n      orderBy: $orderBy\n      where: $where\n    ) {\n      upvotes\n      name\n      id\n      downvotes\n      creator\n    }\n  }\n"): (typeof documents)["\n  query personalities(\n    $distinct: [PersonalityScalarFieldEnum!]\n    $skip: Int\n    $take: Int\n    $cursor: PersonalityWhereUniqueInput\n    $orderBy: [PersonalityOrderByWithRelationInput!]\n    $where: PersonalityWhereInput\n  ) {\n    personalities(\n      distinct: $distinct\n      skip: $skip\n      take: $take\n      cursor: $cursor\n      orderBy: $orderBy\n      where: $where\n    ) {\n      upvotes\n      name\n      id\n      downvotes\n      creator\n    }\n  }\n"];
+export function graphql(
+  source: '\n  query personalities(\n    $distinct: [PersonalityScalarFieldEnum!]\n    $skip: Int\n    $take: Int\n    $cursor: PersonalityWhereUniqueInput\n    $orderBy: [PersonalityOrderByWithRelationInput!]\n    $where: PersonalityWhereInput\n    $searchTerm: String!\n  ) {\n    personalities(\n      distinct: $distinct\n      skip: $skip\n      take: $take\n      cursor: $cursor\n      orderBy: $orderBy\n      where: $where\n      searchTerm: $searchTerm\n    ) {\n      upvotes\n      name\n      id\n      downvotes\n      creator\n    }\n    personalitiesCount(where: $where) {\n      count\n    }\n  }\n',
+): (typeof documents)['\n  query personalities(\n    $distinct: [PersonalityScalarFieldEnum!]\n    $skip: Int\n    $take: Int\n    $cursor: PersonalityWhereUniqueInput\n    $orderBy: [PersonalityOrderByWithRelationInput!]\n    $where: PersonalityWhereInput\n    $searchTerm: String!\n  ) {\n    personalities(\n      distinct: $distinct\n      skip: $skip\n      take: $take\n      cursor: $cursor\n      orderBy: $orderBy\n      where: $where\n      searchTerm: $searchTerm\n    ) {\n      upvotes\n      name\n      id\n      downvotes\n      creator\n    }\n    personalitiesCount(where: $where) {\n      count\n    }\n  }\n']
 
 export function graphql(source: string) {
-  return (documents as any)[source] ?? {};
+  return (documents as any)[source] ?? {}
 }
 
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
+  TDocumentNode extends DocumentNode<infer TType, any> ? TType : never

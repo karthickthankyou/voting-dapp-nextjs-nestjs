@@ -18,7 +18,6 @@ export class MeilisearchController {
     @Query('offset') offset: number,
     @Query('limit') limit: number,
   ) {
-    console.log('offset limit ', offset, limit)
     return await this.meili.search({
       query,
       offset: offset ? Number(offset) : undefined,
@@ -28,12 +27,20 @@ export class MeilisearchController {
 
   @Get('is-healthy')
   async isHealthy(@Request() req) {
-    console.log(process.env.SECRET_ACCESS_KEY)
     if (req.headers['x-secret-access-key'] !== process.env.SECRET_ACCESS_KEY) {
       throw new UnauthorizedException()
     }
 
     return this.meili.client.isHealthy()
+  }
+
+  @Post('update-index')
+  async updateIndex(@Request() req) {
+    if (req.headers['x-secret-access-key'] !== process.env.SECRET_ACCESS_KEY) {
+      throw new UnauthorizedException()
+    }
+
+    return this.meili.updateIndex()
   }
 
   @Post('delete-all')

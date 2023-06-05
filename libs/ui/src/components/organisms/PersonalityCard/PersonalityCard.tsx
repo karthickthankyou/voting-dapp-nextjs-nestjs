@@ -34,8 +34,10 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
   })
 
   useEffect(() => {
-    setVoteCondition(data?.vote.vote)
-  }, [data?.vote.vote])
+    if (data?.vote?.vote) {
+      setVoteCondition(data.vote.vote)
+    }
+  }, [data?.vote?.vote])
 
   const upvotePersonality = async () => {
     if (!contract) {

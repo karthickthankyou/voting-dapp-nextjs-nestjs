@@ -16,7 +16,7 @@ export class VotesResolver {
     return this.votesService.findAll(args)
   }
 
-  @Query(() => Vote, { name: 'vote' })
+  @Query(() => Vote, { name: 'vote', nullable: true })
   findOne(@Args() args: FindUniqueVoteArgs) {
     return this.votesService.findOne(args)
   }

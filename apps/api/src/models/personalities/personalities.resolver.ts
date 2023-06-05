@@ -20,8 +20,11 @@ export class PersonalitiesResolver {
   ) {}
 
   @Query(() => [Personality], { name: 'personalities' })
-  findAll(@Args() args: FindManyPersonalityArgs) {
-    return this.personalitiesService.findAll(args)
+  findAll(
+    @Args() args: FindManyPersonalityArgs,
+    @Args('searchTerm') searchTerm: string,
+  ) {
+    return this.personalitiesService.findAll(args, searchTerm)
   }
 
   @Query(() => Personality, { name: 'personality' })

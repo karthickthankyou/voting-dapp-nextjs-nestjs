@@ -15,9 +15,10 @@ export interface IShowDataProps {
     setSkip: (skip: number) => void
     setTake: (take: number) => void
   }
-  title: ReactNode
+
   children?: ReactNode
   className?: string
+  hidePagination?: boolean
 }
 export const NoResults = () => {
   return (
@@ -39,8 +40,9 @@ export const ShowData = ({
     take = 12,
     totalCount = 0,
   },
+  hidePagination = false,
   children,
-  title,
+
   className = 'grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
 }: IShowDataProps) => {
   return (
@@ -55,20 +57,21 @@ export const ShowData = ({
       {!loading && !error && resultCount === 0 && <NoResults />}
       {!loading && resultCount > 0 && (
         <div>
-          <div className="mb-2 text-lg font-semibold">{title}</div>
           <div className={className}>{children}</div>
-          <div className="flex justify-center">
-            <Pagination
-              count={totalCount || 0}
-              page={(skip || 0) / (take || 12)}
-              rowsPerPage={take || 0}
-              rowsPerPageOptions={[2, 4, 12, 24, 36, 48]}
-              onPageChange={(v, c) => setSkip(c * (take || 12))}
-              onRowsPerPageChange={(v) => {
-                setTake(+v.target.value)
-              }}
-            />
-          </div>
+          {!hidePagination ? (
+            <div className="flex justify-center">
+              <Pagination
+                count={totalCount || 0}
+                page={(skip || 0) / (take || 12)}
+                rowsPerPage={take || 0}
+                rowsPerPageOptions={[2, 4, 12, 24, 36, 48]}
+                onPageChange={(v, c) => setSkip(c * (take || 12))}
+                onRowsPerPageChange={(v) => {
+                  setTake(+v.target.value)
+                }}
+              />
+            </div>
+          ) : null}
         </div>
       )}
     </div>

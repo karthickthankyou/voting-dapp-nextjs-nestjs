@@ -57,10 +57,9 @@ export class MeilisearchService {
     limit = 20,
   }: {
     query: string
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }) {
-    console.log(offset, limit)
     const searchIndex = await this.client.getIndex(INDEX_NAME)
     const result = await searchIndex.search(query, {
       limit,
@@ -68,6 +67,16 @@ export class MeilisearchService {
     })
 
     return result
+  }
+
+  async updateIndex() {
+    const searchIndex = await this.client.getIndex(INDEX_NAME)
+    searchIndex.updateTypoTolerance({
+      minWordSizeForTypos: {
+        oneTypo: 3,
+        twoTypos: 6,
+      },
+    })
   }
 
   async addToIndex(documents: Product[]): Promise<void> {
