@@ -1,0 +1,1 @@
+export { ScrollText } from './ScrollText'

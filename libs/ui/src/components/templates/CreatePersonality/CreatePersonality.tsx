@@ -28,7 +28,7 @@ export const CreatePersonality = ({}: ICreatePersonalityProps) => {
     <>
       <PlainButton
         onClick={() => setOpen(true)}
-        className="flex items-center justify-center gap-2"
+        className="flex items-center justify-center gap-2 px-4 text-sm transition-shadow rounded-full hover:shadow-lg hover:border"
       >
         <IconPlus />
         Create personality
@@ -47,7 +47,7 @@ export const CreatePersonality = ({}: ICreatePersonalityProps) => {
           <HtmlLabel error={errors.name?.message} title="name">
             <HtmlInput placeholder="donald trump" {...register('name')} />
           </HtmlLabel>
-          <Button loading={loading} type="submit">
+          <Button loading={loading} color="black" type="submit">
             Create
           </Button>
         </Form>

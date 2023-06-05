@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider>
       <Container className="my-2">
-        <div className="flex justify-between gap-2">
+        <div className="flex justify-between gap-2 ">
           <Logo />
           <CreatePersonality />
         </div>

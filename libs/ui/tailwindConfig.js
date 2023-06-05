@@ -4,7 +4,7 @@ const brandHue = 116
 
 // #ffdd00 for brandHue 52
 const primaryPallete = {
-  DEFAULT: `hsl(${brandHue}, 100%, 50%)`,
+  DEFAULT: `hsl(${brandHue}, 100%, 30%)`,
   25: `hsl(${brandHue}, 100%, 96%)`,
   50: `hsl(${brandHue}, 100%, 92%)`,
   100: `hsl(${brandHue}, 100%, 84%)`,

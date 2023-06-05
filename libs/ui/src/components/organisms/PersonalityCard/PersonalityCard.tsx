@@ -1,7 +1,6 @@
 import {
   PersonalitiesQuery,
   PersonalityDocument,
-  useVoteQuery,
 } from '@personality-voting/network/src/generated'
 import { PlainButton } from '../../atoms/PlainButton'
 import { IconThumbDown, IconThumbUp } from '@tabler/icons-react'
@@ -14,32 +13,64 @@ import { Dialog } from '../../atoms/Dialog'
 import { produce } from 'immer'
 import { VotingProgressBar } from '../../molecules/VotingProgressBar'
 import { RadialScore } from '../../molecules/RadialScore'
-import { nickNames } from './nicknames'
+import { descriptions, nickNames } from './nicknames'
 
 export type PersonalityQuery = PersonalitiesQuery['personalities'][number]
 
-export const getNickname = (score: number): string => {
+export const pickRandom = (arr: any[]) =>
+  arr[Math.floor(Math.random() * arr.length)]
+
+export const getNickname = (score: number, totalVotes = 0): string => {
+  if (totalVotes === 0) {
+    return pickRandom(nickNames['noVotes'])
+  }
   if (score < -80) {
-    return nickNames['-80'][Math.floor(Math.random() * nickNames['-80'].length)]
+    return pickRandom(nickNames['-80'])
   } else if (score < -60) {
-    return nickNames['-60'][Math.floor(Math.random() * nickNames['-60'].length)]
+    return pickRandom(nickNames['-60'])
   } else if (score < -40) {
-    return nickNames['-40'][Math.floor(Math.random() * nickNames['-40'].length)]
+    return pickRandom(nickNames['-40'])
   } else if (score < -20) {
-    return nickNames['-20'][Math.floor(Math.random() * nickNames['-20'].length)]
+    return pickRandom(nickNames['-20'])
   } else if (score < 0) {
-    return nickNames['0'][Math.floor(Math.random() * nickNames['0'].length)]
+    return pickRandom(nickNames['0'])
   } else if (score < 20) {
-    return nickNames['20'][Math.floor(Math.random() * nickNames['20'].length)]
+    return pickRandom(nickNames['20'])
   } else if (score < 40) {
-    return nickNames['40'][Math.floor(Math.random() * nickNames['40'].length)]
+    return pickRandom(nickNames['40'])
   } else if (score < 60) {
-    return nickNames['60'][Math.floor(Math.random() * nickNames['60'].length)]
+    return pickRandom(nickNames['60'])
   } else if (score < 80) {
-    return nickNames['80'][Math.floor(Math.random() * nickNames['80'].length)]
+    return pickRandom(nickNames['80'])
   }
 
-  return nickNames['100'][Math.floor(Math.random() * nickNames['100'].length)]
+  return pickRandom(nickNames['100'])
+}
+export const getDescription = (score: number, totalVotes = 0): string => {
+  if (totalVotes === 0) {
+    return pickRandom(descriptions['noVotes'])
+  }
+  if (score < -80) {
+    return pickRandom(descriptions['-80'])
+  } else if (score < -60) {
+    return pickRandom(descriptions['-60'])
+  } else if (score < -40) {
+    return pickRandom(descriptions['-40'])
+  } else if (score < -20) {
+    return pickRandom(descriptions['-20'])
+  } else if (score < 0) {
+    return pickRandom(descriptions['0'])
+  } else if (score < 20) {
+    return pickRandom(descriptions['20'])
+  } else if (score < 40) {
+    return pickRandom(descriptions['40'])
+  } else if (score < 60) {
+    return pickRandom(descriptions['60'])
+  } else if (score < 80) {
+    return pickRandom(descriptions['80'])
+  }
+
+  return pickRandom(nickNames['100'])
 }
 export interface IPersonalityCardProps {
   personality: PersonalityQuery
@@ -58,18 +89,10 @@ export const PersonalityCard = memo(
     const { account, contract, isOwner } = useAccount()
     const client = useApolloClient()
 
-    const [{ loading: upvoting, data: upvoteData }, upvoteFunction] =
-      useAsync(upvote)
-    const [{ loading: downvoting, data: downvoteData }, downvoteFunction] =
-      useAsync(downvote)
-
-    const upvotePersonality = async () => {
-      if (!contract) {
-        console.error('Contract not found.')
-        return
-      }
-      await upvoteFunction({ account, contract, name: personality.name })
-
+    const [
+      { loading: upvoting, data: upvoteData, error: upvoteError },
+      upvoteFunction,
+    ] = useAsync(upvote, () => {
       const updatedPersonality = produce(personality, (draft) => {
         draft.upvotes++
         if (draft.myVote?.vote === 1) {
@@ -77,30 +100,43 @@ export const PersonalityCard = memo(
         }
         draft.myVote = { vote: 1 }
       })
-      // !!! How dirty it is without immer?
-      // let updatedPersonality: PersonalityQuery
-      // if (personality.myVote?.vote === -1) {
-      //   // if user had downvoted before, undo the downvote and add upvote
-      //   updatedPersonality = {
-      //     ...personality,
-      //     upvotes: personality.upvotes + 1,
-      //     downvotes: personality.downvotes - 1,
-      //     myVote: { vote: 1 },
-      //   }
-      // } else {
-      //   // if user hadn't voted or had upvoted before, just add upvote
-      //   updatedPersonality = {
-      //     ...personality,
-      //     upvotes: personality.upvotes + 1,
-      //     myVote: { vote: 1 },
-      //   }
-      // }
 
       client.writeQuery({
         query: PersonalityDocument,
         data: {
           personality: updatedPersonality,
         },
+      })
+    })
+    const [{ loading: downvoting, data: downvoteData }, downvoteFunction] =
+      useAsync(downvote, () => {
+        const updatedPersonality = produce(personality, (draft) => {
+          draft.downvotes++
+          if (draft.myVote?.vote === 1) {
+            draft.upvotes--
+          }
+          draft.myVote = { vote: -1 }
+        })
+
+        client.writeQuery({
+          query: PersonalityDocument,
+          data: {
+            personality: updatedPersonality,
+          },
+        })
+      })
+
+    console.log('Come on', upvoteData, upvoteError)
+
+    const upvotePersonality = async () => {
+      if (!contract) {
+        console.error('Contract not found.')
+        return
+      }
+      await upvoteFunction({
+        account,
+        contract,
+        name: personality.name,
       })
     }
 
@@ -110,21 +146,6 @@ export const PersonalityCard = memo(
         return
       }
       await downvoteFunction({ account, contract, name: personality.name })
-
-      const updatedPersonality = produce(personality, (draft) => {
-        draft.downvotes++
-        if (draft.myVote?.vote === 1) {
-          draft.upvotes--
-        }
-        draft.myVote = { vote: -1 }
-      })
-
-      client.writeQuery({
-        query: PersonalityDocument,
-        data: {
-          personality: updatedPersonality,
-        },
-      })
     }
 
     const score = calculatePercentage(
@@ -181,7 +202,12 @@ export const PersonalityCard = memo(
         </div>
         <div className="mt-2 text-center">
           <div className="mb-1 font-bold ">{personality.name}</div>
-          <div className="text-sm text-gray">{getNickname(score)}</div>
+          <div className="mb-1 text-sm font-medium ">
+            {getNickname(score, personality.downvotes + personality.upvotes)}
+          </div>
+          <div className="text-sm text-gray">
+            {getDescription(score, personality.downvotes + personality.upvotes)}
+          </div>
         </div>
       </div>
     )

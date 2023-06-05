@@ -1,4 +1,5 @@
 import { AnimatedVotingProgressBar } from '../../molecules/AnimatedVotingProgressBar'
+import { ScrollText } from '../../molecules/ScrollText'
 
 export interface ILogoProps {}
 
@@ -19,8 +20,22 @@ export const Logo = ({}: ILogoProps) => {
       >
         Personalities
       </div>
-      <div className="absolute px-1 mb-4 text-xs font-semibold text-black border border-white rounded shadow-lg bg-white/30 backdrop-blur-sm left-full">
-        Web3
+      <div className="absolute z-20 px-1 mb-4 -translate-x-1 left-full">
+        <ScrollText
+          input={[
+            'Web3',
+            'Dapp',
+            'Decentralized',
+            'Trustless',
+            'Permissionless',
+            'On-chain',
+            'Blockchain',
+            'Smart Contract Driven',
+            'Crypto-powered',
+            'Distributed Ledger Technology',
+          ]}
+          className="px-2 text-xs font-semibold text-black border border-white rounded shadow-xl shadow-black/20 bg-white/30 backdrop-blur-sm whitespace-nowrap"
+        />
       </div>
       <div className="absolute left-0 w-12 h-12 -translate-x-1/2 -z-10">
         <AnimatedVotingProgressBar />

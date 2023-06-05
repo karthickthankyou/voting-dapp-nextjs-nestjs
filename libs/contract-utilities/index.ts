@@ -37,14 +37,14 @@ export async function upvote({
     const currentVote = await contract.methods.votes(account, name).call()
     if (currentVote === '1') {
       alert('You have already upvoted this personality')
-      return currentVote
+      throw 'You have already upvoted this personality'
     } else {
       await contract.methods.upvote(name).send({ from: account })
       return currentVote
     }
   } catch (err) {
     console.error(err)
-    return 'error' // or whatever string you want to represent error
+    throw err
   }
 }
 
@@ -57,14 +57,14 @@ export async function downvote({
     const currentVote = await contract.methods.votes(account, name).call()
     if (currentVote === '-1') {
       alert('You have already downvoted this personality')
-      return currentVote
+      throw 'You have already downvoted this personality'
     } else {
       await contract.methods.downvote(name).send({ from: account })
       return currentVote
     }
   } catch (err) {
     console.error(err)
-    return 'error'
+    throw err
   }
 }
 

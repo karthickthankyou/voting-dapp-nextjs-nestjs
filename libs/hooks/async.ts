@@ -12,6 +12,7 @@ type AsyncHookReturn<T extends any[]> = [
 
 export function useAsync<T extends any[]>(
   asyncFunc: AsyncFunction<T>,
+  onSuccess?: (result: any) => void,
 ): AsyncHookReturn<T> {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
@@ -25,6 +26,9 @@ export function useAsync<T extends any[]>(
       setData(null)
       try {
         const result = await asyncFunc(...args)
+        if (onSuccess) {
+          onSuccess(result)
+        }
         setData(result)
       } catch (e: any) {
         setError(e.message || 'An error occurred')

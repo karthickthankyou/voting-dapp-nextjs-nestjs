@@ -30,7 +30,7 @@ export const AnimatedVotingProgressBar = () => {
   const roundedScore = props.score.to((value) => Math.round(value))
 
   return (
-    <div className="rounded-full shadow-xl ">
+    <div className="rounded-full shadow-md ">
       <AnimatedRadialScore
         score={roundedScore}
         strokeWidth={'4'}
