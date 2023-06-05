@@ -10,19 +10,28 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { ReactNode } from 'react'
+import { useAccount } from '@personality-voting/hooks/web3'
 
 export interface IApolloProviderProps {
   children: ReactNode
 }
 
 export const ApolloProvider = ({ children }: IApolloProviderProps) => {
+  const { account } = useAccount()
+
   const httpLink = new HttpLink({
     uri: 'http://localhost:3000/graphql',
+    headers: {
+      authorization: account || '',
+    },
   })
 
   const wsLink = new GraphQLWsLink(
     createClient({
       url: 'ws://localhost:3000/graphql',
+      connectionParams: {
+        authorization: account || '',
+      },
     }),
   )
 

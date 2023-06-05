@@ -32,14 +32,9 @@ export class MeilisearchService {
     const indexExists = indexes.results.some((index) => index.uid === indexName)
     if (!indexExists) {
       await this.client.createIndex(indexName)
+      this.updateTypoTolerance(indexName)
       this.setSearchableAttributes(indexName)
     }
-  }
-
-  async deleteAllDocuments(indexName = INDEX_NAME): Promise<void> {
-    const searchIndex = await this.client.getIndex(indexName)
-
-    await searchIndex.deleteAllDocuments()
   }
 
   async setSearchableAttributes(indexName: string): Promise<void> {
@@ -49,6 +44,23 @@ export class MeilisearchService {
     }
     const { taskUid } = await index.updateSettings(settings)
     await index.waitForTask(taskUid)
+  }
+
+  async updateTypoTolerance(indexName: string): Promise<void> {
+    const index = await this.client.getIndex(indexName)
+    const { taskUid } = await index.updateTypoTolerance({
+      minWordSizeForTypos: {
+        oneTypo: 3,
+        twoTypos: 6,
+      },
+    })
+    await index.waitForTask(taskUid)
+  }
+
+  async deleteAllDocuments(indexName = INDEX_NAME): Promise<void> {
+    const searchIndex = await this.client.getIndex(indexName)
+
+    await searchIndex.deleteAllDocuments()
   }
 
   async search({
@@ -67,16 +79,6 @@ export class MeilisearchService {
     })
 
     return result
-  }
-
-  async updateIndex() {
-    const searchIndex = await this.client.getIndex(INDEX_NAME)
-    searchIndex.updateTypoTolerance({
-      minWordSizeForTypos: {
-        oneTypo: 3,
-        twoTypos: 6,
-      },
-    })
   }
 
   async addToIndex(documents: Product[]): Promise<void> {

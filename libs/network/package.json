@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "@personality-voting/hooks": "*",
     "@apollo/client": "3.7.10",
     "firebase": "9.19.0",
     "graphql": "16.6.0",

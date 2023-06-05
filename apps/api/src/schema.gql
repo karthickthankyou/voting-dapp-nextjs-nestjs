@@ -8,6 +8,7 @@ type Personality {
   upvotes: Int!
   downvotes: Int!
   creator: String!
+  myVote: Vote
 }
 
 type AggregateCountOutput {

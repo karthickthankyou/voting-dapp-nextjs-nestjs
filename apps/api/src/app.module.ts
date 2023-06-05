@@ -29,6 +29,13 @@ import { PubSubModule } from './common/pub-sub/pub-sub.module'
         'graphql-ws': true,
         'subscriptions-transport-ws': true,
       },
+      context: ({ req }) => {
+        // return the headers, among other things
+        return {
+          headers: req.headers,
+          // other context properties...
+        }
+      },
     }),
     PrismaModule,
     MeilisearchModule,

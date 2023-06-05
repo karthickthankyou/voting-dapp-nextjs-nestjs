@@ -41,6 +41,7 @@ export type Personality = {
   creator: Scalars['String']
   downvotes: Scalars['Int']
   id: Scalars['Int']
+  myVote?: Maybe<Vote>
   name: Scalars['String']
   upvotes: Scalars['Int']
 }
@@ -89,7 +90,7 @@ export type Query = {
   personalities: Array<Personality>
   personalitiesCount: AggregateCountOutput
   personality: Personality
-  vote: Vote
+  vote?: Maybe<Vote>
   votes: Array<Vote>
 }
 

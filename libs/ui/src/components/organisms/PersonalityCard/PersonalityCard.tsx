@@ -11,33 +11,22 @@ import { useAsync } from '@personality-voting/hooks/async'
 import { useApolloClient } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Dialog } from '../../atoms/Dialog'
+import { produce } from 'immer'
+
+export type PersonalityQuery = PersonalitiesQuery['personalities'][number]
 
 export interface IPersonalityCardProps {
-  personality: PersonalitiesQuery['personalities'][number]
+  personality: PersonalityQuery
 }
 
 export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
   const { account, contract, isOwner } = useAccount()
   const client = useApolloClient()
 
-  const [voteCondition, setVoteCondition] = useState<number>()
-
   const [{ loading: upvoting, data: upvoteData }, upvoteFunction] =
     useAsync(upvote)
   const [{ loading: downvoting, data: downvoteData }, downvoteFunction] =
     useAsync(downvote)
-
-  const { data, loading } = useVoteQuery({
-    variables: {
-      where: { name_voter: { name: personality.name, voter: account } },
-    },
-  })
-
-  useEffect(() => {
-    if (data?.vote?.vote) {
-      setVoteCondition(data.vote.vote)
-    }
-  }, [data?.vote?.vote])
 
   const upvotePersonality = async () => {
     if (!contract) {
@@ -46,23 +35,31 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
     }
     await upvoteFunction({ account, contract, name: personality.name })
 
-    let updatedPersonality
-    if (data?.vote.vote === -1) {
-      // if user had downvoted before, undo the downvote and add upvote
-      updatedPersonality = {
-        ...personality,
-        upvotes: personality.upvotes + 1,
-        downvotes: personality.downvotes - 1,
+    const updatedPersonality = produce(personality, (draft) => {
+      draft.upvotes++
+      if (draft.myVote?.vote === 1) {
+        draft.downvotes
       }
-    } else {
-      // if user hadn't voted or had upvoted before, just add upvote
-      updatedPersonality = {
-        ...personality,
-        upvotes: personality.upvotes + 1,
-      }
-    }
-
-    setVoteCondition(1)
+      draft.myVote = { vote: 1 }
+    })
+    // !!! How dirty it is without immer?
+    // let updatedPersonality: PersonalityQuery
+    // if (personality.myVote?.vote === -1) {
+    //   // if user had downvoted before, undo the downvote and add upvote
+    //   updatedPersonality = {
+    //     ...personality,
+    //     upvotes: personality.upvotes + 1,
+    //     downvotes: personality.downvotes - 1,
+    //     myVote: { vote: 1 },
+    //   }
+    // } else {
+    //   // if user hadn't voted or had upvoted before, just add upvote
+    //   updatedPersonality = {
+    //     ...personality,
+    //     upvotes: personality.upvotes + 1,
+    //     myVote: { vote: 1 },
+    //   }
+    // }
 
     client.writeQuery({
       query: PersonalityDocument,
@@ -79,23 +76,13 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
     }
     await downvoteFunction({ account, contract, name: personality.name })
 
-    let updatedPersonality
-    if (data?.vote.vote === 1) {
-      // if user had downvoted before, undo the downvote and add upvote
-      updatedPersonality = {
-        ...personality,
-        upvotes: personality.upvotes - 1,
-        downvotes: personality.downvotes + 1,
+    const updatedPersonality = produce(personality, (draft) => {
+      draft.downvotes++
+      if (draft.myVote?.vote === 1) {
+        draft.upvotes--
       }
-    } else {
-      // if user hadn't voted or had upvoted before, just add upvote
-      updatedPersonality = {
-        ...personality,
-        downvotes: personality.upvotes + 1,
-      }
-    }
-
-    setVoteCondition(-1)
+      draft.myVote = { vote: -1 }
+    })
 
     client.writeQuery({
       query: PersonalityDocument,
@@ -104,6 +91,8 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
       },
     })
   }
+
+  console.log(personality.name, personality.myVote?.vote)
 
   return (
     <div className="flex flex-col " key={personality.id}>
@@ -116,7 +105,9 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
           onClick={() => upvotePersonality()}
         >
           <IconThumbUp
-            className={`${voteCondition === 1 ? 'fill-primary' : ''}`}
+            className={`${
+              personality.myVote?.vote === 1 ? 'fill-primary' : ''
+            }`}
           />
           <div>{personality.upvotes}</div>
         </PlainButton>
@@ -126,7 +117,9 @@ export const PersonalityCard = ({ personality }: IPersonalityCardProps) => {
           onClick={() => downvotePersonality()}
         >
           <IconThumbDown
-            className={`${voteCondition === -1 ? 'fill-primary' : ''}`}
+            className={`${
+              personality.myVote?.vote === -1 ? 'fill-primary' : ''
+            }`}
           />
           <div>{personality.downvotes}</div>
         </PlainButton>

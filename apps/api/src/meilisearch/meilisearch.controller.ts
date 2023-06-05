@@ -34,15 +34,6 @@ export class MeilisearchController {
     return this.meili.client.isHealthy()
   }
 
-  @Post('update-index')
-  async updateIndex(@Request() req) {
-    if (req.headers['x-secret-access-key'] !== process.env.SECRET_ACCESS_KEY) {
-      throw new UnauthorizedException()
-    }
-
-    return this.meili.updateIndex()
-  }
-
   @Post('delete-all')
   async deleteAll(@Request() req) {
     if (req.headers['x-secret-access-key'] !== process.env.SECRET_ACCESS_KEY) {

@@ -1,4 +1,5 @@
 import {
+  useOnVotedSubscription,
   usePersonalitiesLazyQuery,
   usePersonalityCreatedSubscription,
 } from '@personality-voting/network/src/generated'

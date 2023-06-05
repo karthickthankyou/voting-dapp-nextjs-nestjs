@@ -1,15 +1,15 @@
-import { ArgsType, Field, registerEnumType } from '@nestjs/graphql';
-import { Prisma } from '@prisma/client';
-import { PersonalityOrderByWithRelationInput } from './orderBy.args';
+import { ArgsType, Field, registerEnumType } from '@nestjs/graphql'
+import { Prisma } from '@prisma/client'
+import { PersonalityOrderByWithRelationInput } from './orderBy.args'
 import {
   PersonalityWhereInput,
   PersonalityWhereUniqueInput,
-} from './where.args';
-import { RestrictProperties } from 'src/common/dtos/common.input';
+} from './where.args'
+import { RestrictProperties } from 'src/common/dtos/common.input'
 
 registerEnumType(Prisma.PersonalityScalarFieldEnum, {
   name: 'PersonalityScalarFieldEnum',
-});
+})
 
 @ArgsType()
 export class FindManyPersonalityArgs
@@ -20,21 +20,21 @@ export class FindManyPersonalityArgs
     >
 {
   @Field(() => PersonalityWhereInput, { nullable: true })
-  where: PersonalityWhereInput;
+  where: PersonalityWhereInput
   @Field(() => [PersonalityOrderByWithRelationInput], { nullable: true })
-  orderBy: PersonalityOrderByWithRelationInput[];
+  orderBy: PersonalityOrderByWithRelationInput[]
   @Field(() => PersonalityWhereUniqueInput, { nullable: true })
-  cursor: PersonalityWhereUniqueInput;
+  cursor: PersonalityWhereUniqueInput
   @Field(() => Number, { nullable: true })
-  take: number;
+  take: number
   @Field(() => Number, { nullable: true })
-  skip: number;
+  skip: number
   @Field(() => [Prisma.PersonalityScalarFieldEnum], { nullable: true })
-  distinct: Prisma.PersonalityScalarFieldEnum[];
+  distinct: Prisma.PersonalityScalarFieldEnum[]
 }
 
 @ArgsType()
 export class FindUniquePersonalityArgs {
   @Field({ nullable: true })
-  where: PersonalityWhereUniqueInput;
+  where: PersonalityWhereUniqueInput
 }

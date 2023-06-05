@@ -10,7 +10,11 @@ registerEnumType(Prisma.VoteScalarFieldEnum, {
 
 @ArgsType()
 export class FindManyVoteArgs
-  implements RestrictProperties<FindManyVoteArgs, Omit<Prisma.VoteFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyVoteArgs,
+      Omit<Prisma.VoteFindManyArgs, 'include' | 'select'>
+    >
 {
   @Field(() => VoteWhereInput, { nullable: true })
   where: VoteWhereInput

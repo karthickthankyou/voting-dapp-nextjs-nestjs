@@ -1,5 +1,18 @@
 import { gql } from 'graphql-request'
 
+export const PersonalityFragment = gql`
+  fragment PersonalityFragment on Personality {
+    creator
+    downvotes
+    id
+    name
+    upvotes
+    myVote {
+      vote
+    }
+  }
+`
+
 export const personalities = gql`
   query personalities(
     $distinct: [PersonalityScalarFieldEnum!]
@@ -19,14 +32,19 @@ export const personalities = gql`
       where: $where
       searchTerm: $searchTerm
     ) {
-      upvotes
-      name
-      id
-      downvotes
-      creator
+      ...PersonalityFragment
     }
     personalitiesCount(where: $where) {
       count
+    }
+  }
+  ${PersonalityFragment}
+`
+
+export const personality = gql`
+  query personality($where: PersonalityWhereUniqueInput) {
+    personality(where: $where) {
+      ...PersonalityFragment
     }
   }
 `
@@ -51,18 +69,6 @@ export const onVoted = gql`
       personalityId
       vote
       voter
-    }
-  }
-`
-
-export const personality = gql`
-  query personality($where: PersonalityWhereUniqueInput) {
-    personality(where: $where) {
-      creator
-      downvotes
-      id
-      name
-      upvotes
     }
   }
 `

@@ -42,6 +42,7 @@ export type Personality = {
   creator: Scalars['String']
   downvotes: Scalars['Int']
   id: Scalars['Int']
+  myVote?: Maybe<Vote>
   name: Scalars['String']
   upvotes: Scalars['Int']
 }
@@ -90,7 +91,7 @@ export type Query = {
   personalities: Array<Personality>
   personalitiesCount: AggregateCountOutput
   personality: Personality
-  vote: Vote
+  vote?: Maybe<Vote>
   votes: Array<Vote>
 }
 
@@ -218,6 +219,16 @@ export type VoteWhereUniqueInput = {
   name_voter?: InputMaybe<VoteNameVoterCompoundUniqueInput>
 }
 
+export type PersonalityFragmentFragment = {
+  __typename?: 'Personality'
+  creator: string
+  downvotes: number
+  id: number
+  name: string
+  upvotes: number
+  myVote?: { __typename?: 'Vote'; vote: number } | null
+}
+
 export type PersonalitiesQueryVariables = Exact<{
   distinct?: InputMaybe<
     Array<PersonalityScalarFieldEnum> | PersonalityScalarFieldEnum
@@ -237,13 +248,31 @@ export type PersonalitiesQuery = {
   __typename?: 'Query'
   personalities: Array<{
     __typename?: 'Personality'
-    upvotes: number
-    name: string
-    id: number
-    downvotes: number
     creator: string
+    downvotes: number
+    id: number
+    name: string
+    upvotes: number
+    myVote?: { __typename?: 'Vote'; vote: number } | null
   }>
   personalitiesCount: { __typename?: 'AggregateCountOutput'; count: number }
+}
+
+export type PersonalityQueryVariables = Exact<{
+  where?: InputMaybe<PersonalityWhereUniqueInput>
+}>
+
+export type PersonalityQuery = {
+  __typename?: 'Query'
+  personality: {
+    __typename?: 'Personality'
+    creator: string
+    downvotes: number
+    id: number
+    name: string
+    upvotes: number
+    myVote?: { __typename?: 'Vote'; vote: number } | null
+  }
 }
 
 export type PersonalityCreatedSubscriptionVariables = Exact<{
@@ -278,36 +307,20 @@ export type OnVotedSubscription = {
   } | null
 }
 
-export type PersonalityQueryVariables = Exact<{
-  where?: InputMaybe<PersonalityWhereUniqueInput>
-}>
-
-export type PersonalityQuery = {
-  __typename?: 'Query'
-  personality: {
-    __typename?: 'Personality'
-    creator: string
-    downvotes: number
-    id: number
-    name: string
-    upvotes: number
-  }
-}
-
 export type VoteQueryVariables = Exact<{
   where?: InputMaybe<VoteWhereUniqueInput>
 }>
 
 export type VoteQuery = {
   __typename?: 'Query'
-  vote: {
+  vote?: {
     __typename?: 'Vote'
     id: number
     name: string
     personalityId: number
     vote: number
     voter: string
-  }
+  } | null
 }
 
 export const namedOperations = {
@@ -320,8 +333,22 @@ export const namedOperations = {
     personalityCreated: 'personalityCreated',
     onVoted: 'onVoted',
   },
+  Fragment: {
+    PersonalityFragment: 'PersonalityFragment',
+  },
 }
-
+export const PersonalityFragmentFragmentDoc = /*#__PURE__*/ gql`
+  fragment PersonalityFragment on Personality {
+    creator
+    downvotes
+    id
+    name
+    upvotes
+    myVote {
+      vote
+    }
+  }
+`
 export const PersonalitiesDocument = /*#__PURE__*/ gql`
   query personalities(
     $distinct: [PersonalityScalarFieldEnum!]
@@ -341,16 +368,13 @@ export const PersonalitiesDocument = /*#__PURE__*/ gql`
       where: $where
       searchTerm: $searchTerm
     ) {
-      upvotes
-      name
-      id
-      downvotes
-      creator
+      ...PersonalityFragment
     }
     personalitiesCount(where: $where) {
       count
     }
   }
+  ${PersonalityFragmentFragmentDoc}
 `
 
 /**
@@ -408,6 +432,63 @@ export type PersonalitiesLazyQueryHookResult = ReturnType<
 export type PersonalitiesQueryResult = Apollo.QueryResult<
   PersonalitiesQuery,
   PersonalitiesQueryVariables
+>
+export const PersonalityDocument = /*#__PURE__*/ gql`
+  query personality($where: PersonalityWhereUniqueInput) {
+    personality(where: $where) {
+      ...PersonalityFragment
+    }
+  }
+  ${PersonalityFragmentFragmentDoc}
+`
+
+/**
+ * __usePersonalityQuery__
+ *
+ * To run a query within a React component, call `usePersonalityQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePersonalityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePersonalityQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function usePersonalityQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    PersonalityQuery,
+    PersonalityQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<PersonalityQuery, PersonalityQueryVariables>(
+    PersonalityDocument,
+    options,
+  )
+}
+export function usePersonalityLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PersonalityQuery,
+    PersonalityQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<PersonalityQuery, PersonalityQueryVariables>(
+    PersonalityDocument,
+    options,
+  )
+}
+export type PersonalityQueryHookResult = ReturnType<typeof usePersonalityQuery>
+export type PersonalityLazyQueryHookResult = ReturnType<
+  typeof usePersonalityLazyQuery
+>
+export type PersonalityQueryResult = Apollo.QueryResult<
+  PersonalityQuery,
+  PersonalityQueryVariables
 >
 export const PersonalityCreatedDocument = /*#__PURE__*/ gql`
   subscription personalityCreated {
@@ -498,66 +579,6 @@ export type OnVotedSubscriptionHookResult = ReturnType<
 >
 export type OnVotedSubscriptionResult =
   Apollo.SubscriptionResult<OnVotedSubscription>
-export const PersonalityDocument = /*#__PURE__*/ gql`
-  query personality($where: PersonalityWhereUniqueInput) {
-    personality(where: $where) {
-      creator
-      downvotes
-      id
-      name
-      upvotes
-    }
-  }
-`
-
-/**
- * __usePersonalityQuery__
- *
- * To run a query within a React component, call `usePersonalityQuery` and pass it any options that fit your needs.
- * When your component renders, `usePersonalityQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePersonalityQuery({
- *   variables: {
- *      where: // value for 'where'
- *   },
- * });
- */
-export function usePersonalityQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    PersonalityQuery,
-    PersonalityQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<PersonalityQuery, PersonalityQueryVariables>(
-    PersonalityDocument,
-    options,
-  )
-}
-export function usePersonalityLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    PersonalityQuery,
-    PersonalityQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<PersonalityQuery, PersonalityQueryVariables>(
-    PersonalityDocument,
-    options,
-  )
-}
-export type PersonalityQueryHookResult = ReturnType<typeof usePersonalityQuery>
-export type PersonalityLazyQueryHookResult = ReturnType<
-  typeof usePersonalityLazyQuery
->
-export type PersonalityQueryResult = Apollo.QueryResult<
-  PersonalityQuery,
-  PersonalityQueryVariables
->
 export const VoteDocument = /*#__PURE__*/ gql`
   query vote($where: VoteWhereUniqueInput) {
     vote(where: $where) {
