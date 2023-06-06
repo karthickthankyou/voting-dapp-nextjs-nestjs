@@ -29,16 +29,45 @@ Personalities Dapp is a decentralized application where users can create, upvote
 
 ## Tech Stack
 
-- Nx (Yarn monorepo)
-- React
-- Next.js
-- Nest.js
-- Prisma
-- Apollo
-- GraphQL
-- Tailwind CSS
-- Ethereum blockchain
-- Solidity for smart contracts
+This project extensively uses the following key technologies and dependencies:
+
+- Core Technologies:
+  - [React](https://reactjs.org/)
+  - [Next.js](https://nextjs.org/)
+  - [GraphQL](https://graphql.org/)
+  - [Apollo Client](https://www.apollographql.com/docs/react/)
+  - [NestJS](https://nestjs.com/)
+  - [Prisma](https://www.prisma.io/)
+  - [Ethereum Blockchain](https://ethereum.org/)
+  - [Solidity](https://soliditylang.org/)
+- UI/UX:
+  - [Tailwind CSS](https://tailwindcss.com/)
+  - [@mui/material](https://mui.com/)
+  - [@emotion/react](https://emotion.sh/docs/@emotion/react)
+  - [@headlessui/react](https://headlessui.dev/)
+  - [Storybook](https://storybook.js.org/)
+- Testing:
+  - [Jest](https://jestjs.io/)
+- Code Quality:
+  - [ESLint](https://eslint.org/)
+  - [Prettier](https://prettier.io/)
+  - [Husky](https://typicode.github.io/husky/)
+  - [Lint Staged](https://github.com/okonet/lint-staged)
+- Smart Contracts and Blockchain Development:
+  - [Hardhat](https://hardhat.org/)
+  - [@openzeppelin/contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
+- Additional Libraries:
+
+  - [rxjs](https://rxjs.dev/)
+  - [graphql-tools](https://www.graphql-tools.com/)
+  - [web3](https://web3js.readthedocs.io/)
+  - [meilisearch](https://www.meilisearch.com/)
+  - [graphql-ws](https://github.com/enisdenjo/graphql-ws)
+  - [react-hook-form](https://react-hook-form.com/)
+  - [zod](https://github.com/colinhacks/zod)
+  - [react-spring](https://react-spring.io/)
+
+![Tech cloud](/assets/word-cloud.png)
 
 ## Installation & Usage
 
