@@ -135,3 +135,24 @@ export const groupByPersonalities = gql`
 
   ${PersonalityFragment}
 `
+
+export const createReport = gql`
+  mutation createReport($createReportInput: CreateReportInput!) {
+    createReport(createReportInput: $createReportInput) {
+      createdAt
+      id
+      personalityId
+      reporter
+      updatedAt
+    }
+  }
+`
+
+export const report = gql`
+  query report($where: ReportWhereUniqueInput) {
+    report(where: $where) {
+      id
+      createdAt
+    }
+  }
+`

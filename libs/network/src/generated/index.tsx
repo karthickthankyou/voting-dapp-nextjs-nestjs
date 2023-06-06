@@ -503,6 +503,31 @@ export type GroupByPersonalitiesQuery = {
   }
 }
 
+export type CreateReportMutationVariables = Exact<{
+  createReportInput: CreateReportInput
+}>
+
+export type CreateReportMutation = {
+  __typename?: 'Mutation'
+  createReport: {
+    __typename?: 'Report'
+    createdAt: any
+    id: number
+    personalityId: number
+    reporter: string
+    updatedAt: any
+  }
+}
+
+export type ReportQueryVariables = Exact<{
+  where?: InputMaybe<ReportWhereUniqueInput>
+}>
+
+export type ReportQuery = {
+  __typename?: 'Query'
+  report: { __typename?: 'Report'; id: number; createdAt: any }
+}
+
 export const namedOperations = {
   Query: {
     personalities: 'personalities',
@@ -510,6 +535,10 @@ export const namedOperations = {
     vote: 'vote',
     votes: 'votes',
     groupByPersonalities: 'groupByPersonalities',
+    report: 'report',
+  },
+  Mutation: {
+    createReport: 'createReport',
   },
   Subscription: {
     personalityCreated: 'personalityCreated',
@@ -951,4 +980,107 @@ export type GroupByPersonalitiesLazyQueryHookResult = ReturnType<
 export type GroupByPersonalitiesQueryResult = Apollo.QueryResult<
   GroupByPersonalitiesQuery,
   GroupByPersonalitiesQueryVariables
+>
+export const CreateReportDocument = /*#__PURE__*/ gql`
+  mutation createReport($createReportInput: CreateReportInput!) {
+    createReport(createReportInput: $createReportInput) {
+      createdAt
+      id
+      personalityId
+      reporter
+      updatedAt
+    }
+  }
+`
+export type CreateReportMutationFn = Apollo.MutationFunction<
+  CreateReportMutation,
+  CreateReportMutationVariables
+>
+
+/**
+ * __useCreateReportMutation__
+ *
+ * To run a mutation, you first call `useCreateReportMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReportMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createReportMutation, { data, loading, error }] = useCreateReportMutation({
+ *   variables: {
+ *      createReportInput: // value for 'createReportInput'
+ *   },
+ * });
+ */
+export function useCreateReportMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateReportMutation,
+    CreateReportMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    CreateReportMutation,
+    CreateReportMutationVariables
+  >(CreateReportDocument, options)
+}
+export type CreateReportMutationHookResult = ReturnType<
+  typeof useCreateReportMutation
+>
+export type CreateReportMutationResult =
+  Apollo.MutationResult<CreateReportMutation>
+export type CreateReportMutationOptions = Apollo.BaseMutationOptions<
+  CreateReportMutation,
+  CreateReportMutationVariables
+>
+export const ReportDocument = /*#__PURE__*/ gql`
+  query report($where: ReportWhereUniqueInput) {
+    report(where: $where) {
+      id
+      createdAt
+    }
+  }
+`
+
+/**
+ * __useReportQuery__
+ *
+ * To run a query within a React component, call `useReportQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReportQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReportQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useReportQuery(
+  baseOptions?: Apollo.QueryHookOptions<ReportQuery, ReportQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<ReportQuery, ReportQueryVariables>(
+    ReportDocument,
+    options,
+  )
+}
+export function useReportLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ReportQuery, ReportQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ReportQuery, ReportQueryVariables>(
+    ReportDocument,
+    options,
+  )
+}
+export type ReportQueryHookResult = ReturnType<typeof useReportQuery>
+export type ReportLazyQueryHookResult = ReturnType<typeof useReportLazyQuery>
+export type ReportQueryResult = Apollo.QueryResult<
+  ReportQuery,
+  ReportQueryVariables
 >
