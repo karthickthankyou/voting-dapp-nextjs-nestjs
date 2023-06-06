@@ -3,6 +3,7 @@ import { usePersonalitiesQuery } from '@personality-voting/network/src/generated
 import { ShowData } from '../../organisms/ShowData'
 import { useState } from 'react'
 import { PersonalityCard } from '../../organisms/PersonalityCard'
+import { PageTitle } from '../../atoms/PageTitle'
 
 export interface IMyPersonalitiesPageProps {}
 
@@ -15,7 +16,7 @@ export const MyPersonalitiesPage = ({}: IMyPersonalitiesPageProps) => {
   })
   return (
     <div>
-      <div>My personalities</div>
+      <PageTitle>My personalities</PageTitle>
       <ShowData
         loading={loading}
         pagination={{

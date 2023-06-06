@@ -1,19 +1,25 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { ApolloProvider } from '@personality-voting/network/src/config/apollo'
-import { Logo } from '@personality-voting/ui/src/components/atoms/Logo'
-import { Container } from '@personality-voting/ui/src/components/atoms/Container'
-import { CreatePersonality } from '@personality-voting/ui/src/components/templates/CreatePersonality'
+import { Header } from '@personality-voting/ui/src/components/organisms/Header'
+import { MenuItem } from '@personality-voting/ui/src/components/organisms/Header/Header'
+
+const MENUITEMS: MenuItem[] = [
+  { label: 'About', href: '/about' },
+  { label: 'My votes', href: '/my-votes', loggedIn: true },
+]
+const SUBMENUITEMS: MenuItem[] = [
+  ...MENUITEMS,
+  { label: 'My personalities', href: '/my-personalities', loggedIn: true },
+  { label: 'Reports', href: '/reports', loggedIn: true },
+  { label: 'Settings', href: '/settings', loggedIn: false },
+]
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider>
-      <Container className="my-2">
-        <div className="flex justify-between gap-2 ">
-          <Logo />
-          <CreatePersonality />
-        </div>
-      </Container>
+      <Header menuItems={MENUITEMS} sideMenuItems={SUBMENUITEMS} />
+
       <Component {...pageProps} />
     </ApolloProvider>
   )

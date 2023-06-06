@@ -2,7 +2,7 @@ export interface IAboutPageProps {}
 
 export const AboutPage = ({}: IAboutPageProps) => {
   return (
-    <div className="max-w-lg space-y-12 text-lg">
+    <div className="max-w-lg space-y-12 text-lg font-light">
       <div>
         Welcome to Personalities, the place where we celebrate our divine right
         to be ridiculously judgemental. Yes, you heard it right! We've

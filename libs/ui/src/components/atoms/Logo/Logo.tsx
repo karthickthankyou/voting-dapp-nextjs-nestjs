@@ -7,7 +7,7 @@ export interface ILogoProps {}
 export const Logo = ({}: ILogoProps) => {
   return (
     <Link href="/">
-      <div className="relative flex items-center gap-2 py-4">
+      <div className="relative flex items-center gap-2 ">
         <div
           // style={{
           //   backgroundImage:
