@@ -3,6 +3,7 @@ import { CreatePersonality } from '@personality-voting/ui/src/components/templat
 import { ListPersonalities } from '@personality-voting/ui/src/components/templates/ListPersonalities'
 import { Container } from '@personality-voting/ui/src/components/atoms/Container'
 import { Logo } from '@personality-voting/ui/src/components/atoms/Logo'
+import { AlertSection } from '@personality-voting/ui/src/components/organisms/AlertSection'
 
 export default function Home() {
   const { account, contract, isOwner } = useAccount()
@@ -10,7 +11,11 @@ export default function Home() {
   return (
     <main className="py-24 bg-gray-25 ">
       <Container>
-        <ListPersonalities />
+        {account ? (
+          <ListPersonalities />
+        ) : (
+          <AlertSection>You need to sign in with metamask.</AlertSection>
+        )}
       </Container>
     </main>
   )

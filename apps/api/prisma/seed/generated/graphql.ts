@@ -18,11 +18,34 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: any
 }
 
 export type AggregateCountOutput = {
   __typename?: 'AggregateCountOutput'
   count: Scalars['Int']
+}
+
+export type CreateReportInput = {
+  personalityId: Scalars['Int']
+}
+
+export type DateTimeFilter = {
+  equals?: InputMaybe<Scalars['String']>
+  gt?: InputMaybe<Scalars['String']>
+  gte?: InputMaybe<Scalars['String']>
+  in?: InputMaybe<Array<Scalars['String']>>
+  lt?: InputMaybe<Scalars['String']>
+  lte?: InputMaybe<Scalars['String']>
+  notIn?: InputMaybe<Array<Scalars['String']>>
+}
+
+export type GroupByPersonalities = {
+  __typename?: 'GroupByPersonalities'
+  _count?: Maybe<Scalars['Int']>
+  personality?: Maybe<Personality>
+  personalityId?: Maybe<Scalars['Int']>
 }
 
 export type IntFilter = {
@@ -36,6 +59,15 @@ export type IntFilter = {
   notIn?: InputMaybe<Scalars['Int']>
 }
 
+export type Mutation = {
+  __typename?: 'Mutation'
+  createReport: Report
+}
+
+export type MutationCreateReportArgs = {
+  createReportInput: CreateReportInput
+}
+
 export type Personality = {
   __typename?: 'Personality'
   creator: Scalars['String']
@@ -47,6 +79,7 @@ export type Personality = {
 }
 
 export type PersonalityOrderByWithRelationInput = {
+  Report?: InputMaybe<ReportOrderByRelationAggregateInput>
   creator?: InputMaybe<SortOrder>
   downvotes?: InputMaybe<SortOrder>
   id?: InputMaybe<SortOrder>
@@ -72,6 +105,7 @@ export type PersonalityWhereInput = {
   AND?: InputMaybe<Array<PersonalityWhereInput>>
   NOT?: InputMaybe<Array<PersonalityWhereInput>>
   OR?: InputMaybe<Array<PersonalityWhereInput>>
+  Report?: InputMaybe<ReportListRelationFilter>
   creator?: InputMaybe<StringFilter>
   downvotes?: InputMaybe<IntFilter>
   id?: InputMaybe<IntFilter>
@@ -87,18 +121,28 @@ export type PersonalityWhereUniqueInput = {
 
 export type Query = {
   __typename?: 'Query'
+  groupByPersonalities: Array<GroupByPersonalities>
+  groupByPersonalitiesCount: AggregateCountOutput
   personalities: Array<Personality>
   personalitiesCount: AggregateCountOutput
   personality: Personality
+  report: Report
+  reports: Array<Report>
   vote?: Maybe<Vote>
   votes: Array<Vote>
+  votesCount: AggregateCountOutput
+}
+
+export type QueryGroupByPersonalitiesArgs = {
+  skip: Scalars['Int']
+  take: Scalars['Int']
 }
 
 export type QueryPersonalitiesArgs = {
   cursor?: InputMaybe<PersonalityWhereUniqueInput>
   distinct?: InputMaybe<Array<PersonalityScalarFieldEnum>>
   orderBy?: InputMaybe<Array<PersonalityOrderByWithRelationInput>>
-  searchTerm: Scalars['String']
+  searchTerm?: InputMaybe<Scalars['String']>
   skip?: InputMaybe<Scalars['Int']>
   take?: InputMaybe<Scalars['Int']>
   where?: InputMaybe<PersonalityWhereInput>
@@ -110,6 +154,19 @@ export type QueryPersonalitiesCountArgs = {
 
 export type QueryPersonalityArgs = {
   where?: InputMaybe<PersonalityWhereUniqueInput>
+}
+
+export type QueryReportArgs = {
+  where?: InputMaybe<ReportWhereUniqueInput>
+}
+
+export type QueryReportsArgs = {
+  cursor?: InputMaybe<ReportWhereUniqueInput>
+  distinct?: InputMaybe<Array<ReportScalarFieldEnum>>
+  orderBy?: InputMaybe<Array<ReportOrderByWithRelationInput>>
+  skip?: InputMaybe<Scalars['Int']>
+  take?: InputMaybe<Scalars['Int']>
+  where?: InputMaybe<ReportWhereInput>
 }
 
 export type QueryVoteArgs = {
@@ -125,9 +182,71 @@ export type QueryVotesArgs = {
   where?: InputMaybe<VoteWhereInput>
 }
 
+export type QueryVotesCountArgs = {
+  where?: InputMaybe<VoteWhereInput>
+}
+
 export enum QueryMode {
   Default = 'default',
   Insensitive = 'insensitive',
+}
+
+export type Report = {
+  __typename?: 'Report'
+  createdAt: Scalars['DateTime']
+  id: Scalars['Int']
+  personalityId: Scalars['Int']
+  reporter: Scalars['String']
+  updatedAt: Scalars['DateTime']
+}
+
+export type ReportListRelationFilter = {
+  every?: InputMaybe<ReportWhereInput>
+  none?: InputMaybe<ReportWhereInput>
+  some?: InputMaybe<ReportWhereInput>
+}
+
+export type ReportOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>
+}
+
+export type ReportOrderByWithRelationInput = {
+  createdAt?: InputMaybe<SortOrder>
+  id?: InputMaybe<SortOrder>
+  personality?: InputMaybe<PersonalityOrderByWithRelationInput>
+  personalityId?: InputMaybe<SortOrder>
+  reporter?: InputMaybe<SortOrder>
+  updatedAt?: InputMaybe<SortOrder>
+}
+
+export type ReportReporterPersonalityIdCompoundUniqueInput = {
+  personalityId: Scalars['Int']
+  reporter: Scalars['String']
+}
+
+export enum ReportScalarFieldEnum {
+  CreatedAt = 'createdAt',
+  Id = 'id',
+  PersonalityId = 'personalityId',
+  Reporter = 'reporter',
+  UpdatedAt = 'updatedAt',
+}
+
+export type ReportWhereInput = {
+  AND?: InputMaybe<Array<ReportWhereInput>>
+  NOT?: InputMaybe<Array<ReportWhereInput>>
+  OR?: InputMaybe<Array<ReportWhereInput>>
+  createdAt?: InputMaybe<DateTimeFilter>
+  id?: InputMaybe<IntFilter>
+  personality?: InputMaybe<PersonalityRelationFilter>
+  personalityId?: InputMaybe<IntFilter>
+  reporter?: InputMaybe<StringFilter>
+  updatedAt?: InputMaybe<DateTimeFilter>
+}
+
+export type ReportWhereUniqueInput = {
+  id?: InputMaybe<Scalars['Int']>
+  reporter_personalityId?: InputMaybe<ReportReporterPersonalityIdCompoundUniqueInput>
 }
 
 export enum SortOrder {
@@ -164,6 +283,7 @@ export type Vote = {
   __typename?: 'Vote'
   id: Scalars['Int']
   name: Scalars['String']
+  personality?: Maybe<Personality>
   personalityId: Scalars['Int']
   vote: Scalars['Int']
   voter: Scalars['String']

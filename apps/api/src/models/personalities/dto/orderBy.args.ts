@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
+import { ReportOrderByRelationAggregateInput } from 'src/models/reports/dto/orderBy.args'
 import { VoteOrderByRelationAggregateInput } from 'src/models/votes/dto/orderBy.args'
 
 @InputType()
@@ -11,6 +12,8 @@ export class PersonalityOrderByWithRelationInput
       Prisma.PersonalityOrderByWithRelationInput
     >
 {
+  @Field(() => ReportOrderByRelationAggregateInput, { nullable: true })
+  Report: ReportOrderByRelationAggregateInput
   @Field(() => Prisma.SortOrder, { nullable: true })
   creator: Prisma.SortOrder
   @Field(() => Prisma.SortOrder, { nullable: true })

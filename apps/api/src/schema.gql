@@ -21,17 +21,43 @@ type Vote {
   vote: Int!
   voter: String!
   personalityId: Int!
+  personality: Personality
+}
+
+type Report {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: Int!
+  reporter: String!
+  personalityId: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type GroupByPersonalities {
+  _count: Int
+  personalityId: Int
+  personality: Personality
 }
 
 type Query {
-  personalities(where: PersonalityWhereInput, orderBy: [PersonalityOrderByWithRelationInput!], cursor: PersonalityWhereUniqueInput, take: Int, skip: Int, distinct: [PersonalityScalarFieldEnum!], searchTerm: String!): [Personality!]!
+  personalities(where: PersonalityWhereInput, orderBy: [PersonalityOrderByWithRelationInput!], cursor: PersonalityWhereUniqueInput, take: Int, skip: Int, distinct: [PersonalityScalarFieldEnum!], searchTerm: String): [Personality!]!
   personality(where: PersonalityWhereUniqueInput): Personality!
   personalitiesCount(where: PersonalityWhereInput): AggregateCountOutput!
   votes(where: VoteWhereInput, orderBy: [VoteOrderByWithRelationInput!], cursor: VoteWhereUniqueInput, take: Int, skip: Int, distinct: [VoteScalarFieldEnum!]): [Vote!]!
   vote(where: VoteWhereUniqueInput): Vote
+  votesCount(where: VoteWhereInput): AggregateCountOutput!
+  reports(where: ReportWhereInput, orderBy: [ReportOrderByWithRelationInput!], cursor: ReportWhereUniqueInput, take: Int, skip: Int, distinct: [ReportScalarFieldEnum!]): [Report!]!
+  report(where: ReportWhereUniqueInput): Report!
+  groupByPersonalities(take: Int!, skip: Int!): [GroupByPersonalities!]!
+  groupByPersonalitiesCount: AggregateCountOutput!
 }
 
 input PersonalityWhereInput {
+  Report: ReportListRelationFilter
   creator: StringFilter
   votes: VoteListRelationFilter
   id: IntFilter
@@ -41,6 +67,45 @@ input PersonalityWhereInput {
   AND: [PersonalityWhereInput!]
   OR: [PersonalityWhereInput!]
   NOT: [PersonalityWhereInput!]
+}
+
+input ReportListRelationFilter {
+  every: ReportWhereInput
+  some: ReportWhereInput
+  none: ReportWhereInput
+}
+
+input ReportWhereInput {
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  id: IntFilter
+  reporter: StringFilter
+  personalityId: IntFilter
+  personality: PersonalityRelationFilter
+  AND: [ReportWhereInput!]
+  OR: [ReportWhereInput!]
+  NOT: [ReportWhereInput!]
+}
+
+input DateTimeFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+}
+
+input IntFilter {
+  equals: Int
+  in: Int
+  notIn: Int
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: Int
 }
 
 input StringFilter {
@@ -63,6 +128,11 @@ enum QueryMode {
   insensitive
 }
 
+input PersonalityRelationFilter {
+  is: PersonalityWhereInput
+  isNot: PersonalityWhereInput
+}
+
 input VoteListRelationFilter {
   every: VoteWhereInput
   some: VoteWhereInput
@@ -81,29 +151,18 @@ input VoteWhereInput {
   NOT: [VoteWhereInput!]
 }
 
-input IntFilter {
-  equals: Int
-  in: Int
-  notIn: Int
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: Int
-}
-
-input PersonalityRelationFilter {
-  is: PersonalityWhereInput
-  isNot: PersonalityWhereInput
-}
-
 input PersonalityOrderByWithRelationInput {
+  Report: ReportOrderByRelationAggregateInput
   creator: SortOrder
   id: SortOrder
   name: SortOrder
   upvotes: SortOrder
   downvotes: SortOrder
   votes: VoteOrderByRelationAggregateInput
+}
+
+input ReportOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 enum SortOrder {
@@ -153,6 +212,41 @@ enum VoteScalarFieldEnum {
   vote
   voter
   personalityId
+}
+
+input ReportOrderByWithRelationInput {
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  id: SortOrder
+  reporter: SortOrder
+  personalityId: SortOrder
+  personality: PersonalityOrderByWithRelationInput
+}
+
+input ReportWhereUniqueInput {
+  reporter_personalityId: ReportReporterPersonalityIdCompoundUniqueInput
+  id: Int
+}
+
+input ReportReporterPersonalityIdCompoundUniqueInput {
+  reporter: String!
+  personalityId: Int!
+}
+
+enum ReportScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  reporter
+  personalityId
+}
+
+type Mutation {
+  createReport(createReportInput: CreateReportInput!): Report!
+}
+
+input CreateReportInput {
+  personalityId: Int!
 }
 
 type Subscription {

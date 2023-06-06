@@ -21,7 +21,7 @@ export const personalities = gql`
     $cursor: PersonalityWhereUniqueInput
     $orderBy: [PersonalityOrderByWithRelationInput!]
     $where: PersonalityWhereInput
-    $searchTerm: String!
+    $searchTerm: String
   ) {
     personalities(
       distinct: $distinct
@@ -83,4 +83,55 @@ export const vote = gql`
       voter
     }
   }
+`
+
+export const votes = gql`
+  query votes(
+    $where: VoteWhereInput
+    $orderBy: [VoteOrderByWithRelationInput!]
+    $cursor: VoteWhereUniqueInput
+    $take: Int
+    $skip: Int
+    $distinct: [VoteScalarFieldEnum!]
+  ) {
+    votes(
+      where: $where
+      orderBy: $orderBy
+      cursor: $cursor
+      take: $take
+      skip: $skip
+      distinct: $distinct
+    ) {
+      id
+      name
+      personalityId
+      vote
+      voter
+      personality {
+        ...PersonalityFragment
+      }
+    }
+    votesCount(where: $where) {
+      count
+    }
+  }
+  ${PersonalityFragment}
+`
+
+export const groupByPersonalities = gql`
+  query groupByPersonalities($skip: Int!, $take: Int!) {
+    groupByPersonalities(skip: $skip, take: $take) {
+      personalityId
+      _count
+      personality {
+        ...PersonalityFragment
+      }
+    }
+
+    groupByPersonalitiesCount {
+      count
+    }
+  }
+
+  ${PersonalityFragment}
 `

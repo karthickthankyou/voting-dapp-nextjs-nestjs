@@ -1,15 +1,12 @@
 import {
   PersonalityOrderByWithRelationInput,
   SortOrder,
-  useOnVotedSubscription,
   usePersonalitiesLazyQuery,
   usePersonalityCreatedSubscription,
 } from '@personality-voting/network/src/generated'
 import { ShowData } from '../../organisms/ShowData'
 import { useEffect, useState } from 'react'
 import { PersonalityCard } from '../../organisms/PersonalityCard'
-import { HtmlLabel } from '../../atoms/HtmlLabel'
-import { HtmlInput } from '../../atoms/HtmlInput'
 import { HtmlSelect } from '../../atoms/HtmlSelect'
 import { SearchBar } from '../../molecules/SearchBar'
 import { useDebouncedValue } from '@personality-voting/hooks/async'
@@ -69,7 +66,6 @@ export const ListPersonalities = ({}: IListPersonalitiesProps) => {
         <SortDropdown handleSort={handleSort} />
       </div>
       <ShowData
-        className="grid gap-12 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         error={error?.message}
         loading={loading}
         hidePagination={Boolean(searchTerm)}

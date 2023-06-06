@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Personality {
-    id        Int    @id @default(autoincrement())
-    name      String @unique
+    id        Int      @id @default(autoincrement())
+    name      String   @unique
     upvotes   Int
     downvotes Int
     creator   String
     votes     Vote[]
+    Report    Report[]
 }
 
 model Vote {
@@ -28,4 +29,15 @@ model Vote {
     personalityId Int?
 
     @@unique([name, voter])
+}
+
+model Report {
+    id            Int         @id @default(autoincrement())
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+    reporter      String
+    personality   Personality @relation(fields: [personalityId], references: [id])
+    personalityId Int
+
+    @@unique([reporter, personalityId])
 }

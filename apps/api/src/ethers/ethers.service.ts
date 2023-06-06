@@ -32,6 +32,11 @@ export class EthersService {
     this.initializeListeners()
   }
 
+  async isOwner(address: string): Promise<boolean> {
+    const contractOwner = await this.contract?.methods.owner().call()
+    return address === contractOwner
+  }
+
   private async testConnection() {
     console.log('testConnection ')
     try {

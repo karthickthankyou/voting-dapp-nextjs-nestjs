@@ -31,7 +31,7 @@ export class PersonalitiesResolver {
   @Query(() => [Personality], { name: 'personalities' })
   findAll(
     @Args() args: FindManyPersonalityArgs,
-    @Args('searchTerm') searchTerm: string,
+    @Args('searchTerm', { nullable: true }) searchTerm: string,
   ) {
     return this.personalitiesService.findAll(args, searchTerm)
   }

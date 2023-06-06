@@ -13,6 +13,7 @@ import { EthersModule } from './ethers/ethers.module'
 import { PersonalitiesModule } from './models/personalities/personalities.module'
 import { VotesModule } from './models/votes/votes.module'
 import { PubSubModule } from './common/pub-sub/pub-sub.module'
+import { ReportsModule } from './models/reports/reports.module'
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { PubSubModule } from './common/pub-sub/pub-sub.module'
 
     PersonalitiesModule,
     VotesModule,
+    ReportsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

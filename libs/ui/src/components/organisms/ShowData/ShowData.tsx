@@ -42,8 +42,7 @@ export const ShowData = ({
   },
   hidePagination = false,
   children,
-
-  className = 'grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+  className = 'grid gap-12 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6',
 }: IShowDataProps) => {
   return (
     <div>

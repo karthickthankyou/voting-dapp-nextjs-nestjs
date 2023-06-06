@@ -15,7 +15,7 @@ export class PersonalitiesService {
 
   async findAll(
     { cursor, distinct, orderBy, skip, take, where }: FindManyPersonalityArgs,
-    searchTerm: string,
+    searchTerm?: string,
   ) {
     if (searchTerm && searchTerm.trim() !== '') {
       const searchResults = await this.meili.search({

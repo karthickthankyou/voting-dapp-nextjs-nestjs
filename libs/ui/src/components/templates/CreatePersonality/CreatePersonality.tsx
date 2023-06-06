@@ -10,6 +10,7 @@ import { PlainButton } from '../../atoms/PlainButton'
 import { IconPlus } from '@tabler/icons-react'
 import { Button } from '../../atoms/Button'
 import { useAsync } from '@personality-voting/hooks/async'
+import Link from 'next/link'
 
 export interface ICreatePersonalityProps {}
 
@@ -24,6 +25,10 @@ export const CreatePersonality = ({}: ICreatePersonalityProps) => {
 
   const [{ data, loading, error }, createPersonalityFunction] =
     useAsync(createPersonality)
+  if (!account) {
+    return null
+  }
+
   return (
     <>
       <PlainButton
@@ -33,6 +38,7 @@ export const CreatePersonality = ({}: ICreatePersonalityProps) => {
         <IconPlus />
         Create personality
       </PlainButton>
+      <Link href="/my-votes">My votes</Link>
       <Dialog open={open} setOpen={setOpen} title={'Create personality'}>
         <Form
           onSubmit={handleSubmit(({ name }) => {
