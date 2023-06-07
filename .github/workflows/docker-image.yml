@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Debug secrets
+        run: echo "${{ secrets.DOCKERHUB_USERNAME }}" && echo "${{ secrets.DOCKERHUB_TOKEN }}"
 
+      - uses: actions/checkout@v2
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
