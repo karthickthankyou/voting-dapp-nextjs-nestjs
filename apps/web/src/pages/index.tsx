@@ -4,6 +4,7 @@ import { ListPersonalities } from '@personality-voting/ui/src/components/templat
 import { Container } from '@personality-voting/ui/src/components/atoms/Container'
 import { Logo } from '@personality-voting/ui/src/components/atoms/Logo'
 import { AlertSection } from '@personality-voting/ui/src/components/organisms/AlertSection'
+import { PlainButton } from '@personality-voting/ui/src/components/atoms/PlainButton'
 
 export default function Home() {
   const { account, contract, isOwner } = useAccount()
@@ -14,7 +15,16 @@ export default function Home() {
         {account ? (
           <ListPersonalities />
         ) : (
-          <AlertSection>You need to sign in with metamask.</AlertSection>
+          <AlertSection>
+            <div>You need to sign in with metamask.</div>
+            <PlainButton
+              onClick={() => {
+                window.location.reload()
+              }}
+            >
+              Refresh.
+            </PlainButton>
+          </AlertSection>
         )}
       </Container>
     </main>
