@@ -15,7 +15,7 @@ export class MeilisearchService {
 
   constructor() {
     this.client = new MeiliSearch({
-      host: 'http://localhost:1201',
+      host: process.env.MEILI_URL,
       apiKey: process.env.MEILI_MASTER_KEY,
     })
 

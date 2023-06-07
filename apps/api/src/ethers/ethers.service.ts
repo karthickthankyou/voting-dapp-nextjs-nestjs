@@ -20,7 +20,6 @@ export class EthersService {
     private readonly meili: MeilisearchService,
     private readonly pubSub: PubSubService,
   ) {
-    console.log('WSS_URL ', process.env.WSS_URL)
     this.web3 = new Web3(process.env.WSS_URL)
 
     this.contract = new this.web3.eth.Contract(
@@ -38,13 +37,10 @@ export class EthersService {
   }
 
   private async testConnection() {
-    console.log('testConnection ')
     try {
       const blockNumber = await this.web3.eth.getBlockNumber()
-      console.log('blockNumber ', blockNumber)
-      console.log('Connected to blockchain, latest block number:', blockNumber)
+      console.info('Connected to blockchain, latest block number:', blockNumber)
     } catch (err) {
-      console.log('failed?')
       console.error('Failed to connect to blockchain:', err)
     }
   }
@@ -56,17 +52,13 @@ export class EthersService {
           fromBlock: 'latest',
         },
         async (error, event) => {
-          console.log(event)
           const { name, creator } = event.returnValues
           const personality = await this.prisma.personality.create({
             data: { name, downvotes: 0, upvotes: 0, creator },
           })
 
           await this.meili.addToIndex([{ name, id: personality.id }])
-          // Add your logic here
-          console.log('Event ', event)
 
-          console.log('Publishing...', personality)
           this.pubSub.publish('personalityCreated', {
             personalityCreated: personality,
           })
@@ -83,7 +75,6 @@ export class EthersService {
           fromBlock: 'latest',
         },
         async (error, event) => {
-          console.log(event)
           const { name, upvotes, downvotes, voter, vote } = event.returnValues
           await this.prisma.personality.update({
             where: { name },
@@ -104,8 +95,6 @@ export class EthersService {
           this.pubSub.publish('onVoted', {
             onVoted: updatedVote,
           })
-          // Add your logic here
-          console.log('Event ', event)
         },
       )
       .on('connected', (str) => console.log('VotingUpdated listening...', str))
@@ -120,7 +109,6 @@ export class EthersService {
             console.error('Error on PersonalityRemoved event', error)
             return
           }
-          console.log(event)
           const { name } = event.returnValues
 
           // Remove from Prisma
@@ -130,8 +118,6 @@ export class EthersService {
 
           // Remove from Meili
           await this.meili.deleteFromIndex(name)
-
-          console.log('Personality removed: ', name)
         },
       )
       .on('connected', () => console.log('PersonalityRemoved listening...'))
