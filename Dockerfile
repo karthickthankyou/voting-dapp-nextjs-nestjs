@@ -11,13 +11,13 @@ RUN apk add --update --no-cache python3 make g++
 COPY . .
 
 # Install dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Generate the Prisma client
 RUN cd /app/apps/api && npx prisma generate
 
 # Build the application
-RUN cd /app/apps/api && yarn run build
+RUN cd /app/apps/api && npm run build
 
 # Start the final image
 FROM node:16-alpine
