@@ -28,7 +28,22 @@ export const useAccount = () => {
       window.web3 = new Web3(window.ethereum as any)
       try {
         // Request account access if needed
-        await window.ethereum.request({ method: 'eth_requestAccounts' })
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: '0x13881', // Chain ID for Mumbai Testnet on Polygon
+              chainName: 'Mumbai Testnet',
+              nativeCurrency: {
+                name: 'MATIC',
+                symbol: 'MATIC',
+                decimals: 18,
+              },
+              rpcUrls: ['https://rpc-mumbai.maticvigil.com/'], // RPC URL for the Mumbai Testnet
+              blockExplorerUrls: ['https://mumbai.polygonscan.com/'], // Block explorer URL for the Mumbai Testnet
+            },
+          ],
+        })
       } catch (error) {
         console.error('User denied account access')
       }

@@ -1,28 +1,19 @@
-import TablePagination, {
-  TablePaginationProps,
-} from '@mui/material/TablePagination'
+import MuiPagination, { PaginationProps } from '@mui/material/Pagination'
 
 export interface IPaginationProps {}
 
 export const Pagination = ({
   count,
   page,
-  onPageChange,
-  rowsPerPage,
-  onRowsPerPageChange,
+  onChange,
   ...props
-}: TablePaginationProps) => (
-  <TablePagination
+}: PaginationProps) => (
+  <MuiPagination
     count={count}
     page={page}
-    onPageChange={onPageChange}
-    rowsPerPage={rowsPerPage}
-    onRowsPerPageChange={onRowsPerPageChange}
+    onChange={onChange}
     classes={{
       root: 'mt-4 border-0',
-      displayedRows: 'font-sans',
-      selectLabel: 'font-sans',
-      toolbar: 'p-0',
     }}
     {...props}
   />

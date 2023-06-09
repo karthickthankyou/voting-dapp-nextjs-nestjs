@@ -30,11 +30,13 @@ import { ReportsModule } from './models/reports/reports.module'
         'graphql-ws': true,
         'subscriptions-transport-ws': true,
       },
-      context: ({ req }) => {
-        // return the headers, among other things
-        return {
-          headers: req.headers,
-          // other context properties...
+      context: ({ req, connection }) => {
+        if (connection) {
+          // For subscriptions
+          return connection.context
+        } else {
+          // For queries and mutations
+          return { headers: req.headers }
         }
       },
     }),

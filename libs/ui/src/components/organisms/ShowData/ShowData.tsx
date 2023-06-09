@@ -43,36 +43,29 @@ export const ShowData = ({
   hidePagination = false,
   children,
   className = 'grid gap-12 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6',
-}: IShowDataProps) => {
-  return (
-    <div>
-      {error && (
-        <AlertSection>
-          Oops. Something went wrong.
-          <span className="text-xs">Psst. {error}</span>
-        </AlertSection>
-      )}
-      {loading && <LoaderPanel />}
-      {!loading && !error && resultCount === 0 && <NoResults />}
-      {!loading && resultCount > 0 && (
-        <div>
-          <div className={className}>{children}</div>
-          {!hidePagination ? (
-            <div className="flex justify-center">
-              <Pagination
-                count={totalCount || 0}
-                page={(skip || 0) / (take || 12)}
-                rowsPerPage={take || 0}
-                rowsPerPageOptions={[2, 4, 12, 24, 36, 48]}
-                onPageChange={(v, c) => setSkip(c * (take || 12))}
-                onRowsPerPageChange={(v) => {
-                  setTake(+v.target.value)
-                }}
-              />
-            </div>
-          ) : null}
-        </div>
-      )}
-    </div>
-  )
-}
+}: IShowDataProps) => (
+  <div>
+    {error && (
+      <AlertSection>
+        Oops. Something went wrong.
+        <span className="text-xs">Psst. {error}</span>
+      </AlertSection>
+    )}
+    {loading && <LoaderPanel />}
+    {!loading && !error && resultCount === 0 && <NoResults />}
+    {!loading && resultCount > 0 && (
+      <div>
+        <div className={className}>{children}</div>
+        {!hidePagination ? (
+          <div className="flex justify-center">
+            <Pagination
+              count={Math.floor(totalCount / take) || 0}
+              page={(skip || 0) / (take || 12)}
+              onChange={(v, c) => setSkip(c * (take || 12))}
+            />
+          </div>
+        ) : null}
+      </div>
+    )}
+  </div>
+)

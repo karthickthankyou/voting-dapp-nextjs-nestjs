@@ -38,7 +38,7 @@ export const CreatePersonality = ({}: ICreatePersonalityProps) => {
         <IconPlus />
         Create personality
       </PlainButton>
-      <Link href="/my-votes">My votes</Link>
+
       <Dialog open={open} setOpen={setOpen} title={'Create personality'}>
         <Form
           onSubmit={handleSubmit(({ name }) => {

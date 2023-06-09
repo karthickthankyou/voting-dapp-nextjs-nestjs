@@ -130,8 +130,6 @@ export const PersonalityCard = memo(
         })
       })
 
-    console.log('Come on', upvoteData, upvoteError)
-
     const upvotePersonality = async () => {
       if (!contract) {
         console.error('Contract not found.')
@@ -202,7 +200,6 @@ export const PersonalityCard = memo(
               </div>
             </div>
           </div>
-          {isOwner ? <OwnerDialog name={personality.name} /> : null}
         </div>
         <div className="mt-2 text-center">
           <div className="flex items-center justify-center gap-2 mb-1 font-bold">
@@ -214,6 +211,7 @@ export const PersonalityCard = memo(
           <div className="text-sm text-gray">
             {getDescription(score, personality.downvotes + personality.upvotes)}
           </div>
+          {isOwner ? <OwnerDialog name={personality.name} /> : null}
         </div>
       </div>
     )
@@ -326,7 +324,12 @@ export const OwnerDialog = ({ name }: { name: string }) => {
   const { account, contract, isOwner } = useAccount()
   return (
     <>
-      <PlainButton onClick={() => setOpen(true)}>Owner</PlainButton>
+      <PlainButton
+        className="text-sm underline underline-offset-4"
+        onClick={() => setOpen(true)}
+      >
+        Owner
+      </PlainButton>
       <Dialog open={open} setOpen={setOpen} title={'Owners'}>
         <PlainButton
           loading={loading}

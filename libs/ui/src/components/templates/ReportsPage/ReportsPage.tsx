@@ -23,7 +23,7 @@ export const ReportsPage = () => {
     >
       {data?.groupByPersonalities.map((report) => {
         return report.personality ? (
-          <div>
+          <div key={report.personalityId}>
             <PersonalityCard
               key={report.personalityId}
               personality={report.personality}
