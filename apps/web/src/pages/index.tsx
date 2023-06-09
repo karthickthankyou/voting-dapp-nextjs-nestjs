@@ -1,8 +1,6 @@
 import { useAccount } from '@personality-voting/hooks/web3'
-import { CreatePersonality } from '@personality-voting/ui/src/components/templates/CreatePersonality'
 import { ListPersonalities } from '@personality-voting/ui/src/components/templates/ListPersonalities'
 import { Container } from '@personality-voting/ui/src/components/atoms/Container'
-import { Logo } from '@personality-voting/ui/src/components/atoms/Logo'
 import { AlertSection } from '@personality-voting/ui/src/components/organisms/AlertSection'
 import { PlainButton } from '@personality-voting/ui/src/components/atoms/PlainButton'
 

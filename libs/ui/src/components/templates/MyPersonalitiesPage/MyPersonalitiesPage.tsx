@@ -4,6 +4,7 @@ import { ShowData } from '../../organisms/ShowData'
 import { useState } from 'react'
 import { PersonalityCard } from '../../organisms/PersonalityCard'
 import { PageTitle } from '../../atoms/PageTitle'
+import { CreatePersonality } from '../CreatePersonality'
 
 export interface IMyPersonalitiesPageProps {}
 
@@ -16,7 +17,10 @@ export const MyPersonalitiesPage = ({}: IMyPersonalitiesPageProps) => {
   })
   return (
     <div>
-      <PageTitle>My personalities</PageTitle>
+      <div className="flex items-center justify-between gap-2">
+        <PageTitle>My personalities</PageTitle>
+        <CreatePersonality />
+      </div>
       <ShowData
         loading={loading}
         pagination={{
