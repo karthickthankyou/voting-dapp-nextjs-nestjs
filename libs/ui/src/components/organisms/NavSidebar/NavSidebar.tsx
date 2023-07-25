@@ -2,10 +2,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { IconDoorExit, IconMenu2 } from '@tabler/icons-react'
 import { Sidebar } from '../Sidebar'
-import { Brand } from '../../atoms/Brand'
-import { Button } from '../../atoms/Button'
+
 import { MenuItem } from '../Header/Header'
 import { useAccount } from '@personality-voting/hooks/web3'
+import { Logo } from '../../atoms/Logo'
 
 export interface INavSidebarProps {
   menuItems: MenuItem[]
@@ -28,7 +28,11 @@ export const NavSidebar = ({ menuItems }: INavSidebarProps) => {
       </button>
       <Sidebar open={open} setOpen={setOpen}>
         <Sidebar.Header>
-          <Brand shortForm />
+          <div className="relative z-10 flex items-center justify-between w-full gap-16">
+            <Link href="/" aria-label="Home" className="max-w-md">
+              <Logo />
+            </Link>
+          </div>
         </Sidebar.Header>
         <Sidebar.Body>
           <div className="flex flex-col items-start space-y-1">

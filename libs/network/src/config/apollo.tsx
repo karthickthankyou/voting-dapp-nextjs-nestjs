@@ -20,7 +20,7 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
   const { account } = useAccount()
 
   const httpLink = new HttpLink({
-    uri: 'https://api.personalities.iamkarthick.com/graphql',
+    uri: process.env.NEXT_PUBLIC_API_URL + '/graphql',
     headers: {
       authorization: account || '',
     },
@@ -28,7 +28,7 @@ export const ApolloProvider = ({ children }: IApolloProviderProps) => {
 
   const wsLink = new GraphQLWsLink(
     createClient({
-      url: 'wss://api.personalities.iamkarthick.com/graphql',
+      url: process.env.NEXT_PUBLIC_API_URL_WSS + '/graphql',
       connectionParams: {
         authorization: account || '',
       },

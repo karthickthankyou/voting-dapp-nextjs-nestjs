@@ -17,7 +17,7 @@ const config: CodegenConfig = {
         avoidOptionals: false,
         exposeQueryKeys: true,
         fetcher: {
-          endpoint: 'https://api.personalities.iamkarthick.com/graphql',
+          endpoint: 'http://localhost:3000/graphql',
         },
         pureMagicComment: true,
       },
